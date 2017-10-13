@@ -40,9 +40,9 @@ int isDateValid (TDate * date) {
     for(i=1; i<13; i+=2)
     {
         if (i==7) i--;
-        if (i==syear->month)
+        if (i==date->month)
         {
-            if (syear->day<32)
+            if (date->day<32)
             {
                 return 1;
             }
@@ -58,9 +58,9 @@ int isDateValid (TDate * date) {
     for(i=4; i<12; i+=2)
     {
         if (i==6) i++;
-        if (i==syear->month)
+        if (i==date->month)
         {
-            if (syear->day<31)
+            if (date->day<31)
             {
                 return 1;
             }
@@ -73,8 +73,8 @@ int isDateValid (TDate * date) {
     //auf Februar prüfen
     if (date->month==2)
     {
-        if( isLeapYear(syear) && (syear->day==29) ) return 1;
-        if( (syear->day > 0) && (syear->day < 29) ) return 1;
+        if( isLeapYear(date) && (date->day==29) ) return 1;
+        if( (date->day > 0) && (date->day < 29) ) return 0;
     }
     return 1;
 }
