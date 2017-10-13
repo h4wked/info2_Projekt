@@ -1,0 +1,80 @@
+#include <cstdio.h>
+#include <stdlib.h>
+
+#include "datetime.h"
+
+int isLeapYear (TDate * date) {
+
+    /* alle 4 Jahre
+     * alle 100 nicht
+     * alle 400 Trotzdem
+     * 1 ist schaltjahr
+     * 0 ist nicht*/
+
+    if ( (date->year % 400) == 0) return 1;
+
+    if ( (date->year % 100) == 0) return 0;
+
+    if ( (date->year % 4)   == 0) return 1;
+
+    return 0;
+}
+
+int isDateValid (TDate * date) {
+
+    // 1 valid 0 unvalid
+
+    //Pruefung jahr
+    if (date->year < 1) return 0;
+    if (date->year > 2200) return 0;
+
+    //Prüfung Monat
+    if (date->month < 1) return 0;
+    if (date->month > 12) return 0;
+
+    //Prüfung Tag
+    if (date->day < 1) return 0;
+
+    //31 tage prüfen
+
+    for(i=1; i<13; i+=2)
+    {
+        if (i==7) i--;
+        if (i==syear->month)
+        {
+            if (syear->day<32)
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+    }
+
+
+    //auf 30 prüfen
+    for(i=4; i<12; i+=2)
+    {
+        if (i==6) i++;
+        if (i==syear->month)
+        {
+            if (syear->day<31)
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
+        }
+    }
+    //auf Februar prüfen
+    if (date->month==2)
+    {
+        if( isLeapYear(syear) && (syear->day==29) ) return 1;
+        if( (syear->day > 0) && (syear->day < 29) ) return 1;
+    }
+    return 1;
+}
