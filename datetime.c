@@ -1,7 +1,8 @@
-#include <cstdio.h>
+#include <stdio.h>
 #include <stdlib.h>
 
 #include "datetime.h"
+#include "datastructure.h"
 
 int isLeapYear (TDate * date) {
 
@@ -77,4 +78,28 @@ int isDateValid (TDate * date) {
         if( (date->day > 0) && (date->day < 29) ) return 0;
     }
     return 1;
+}
+
+int getDateFromString (char * string, TDate * date) {
+
+    //Hilfsstring
+    string *year = malloc(char*5)
+    string *month = malloc(char*5)
+    string *day = malloc(char*5)
+
+    if( fscanf( string, "%s.%s.%s", day, month, year) < 3) {
+        printf("ungültiges format!");
+        return 0;
+    }
+
+    //Eintragen in date-struct
+    date->day = atoi(day);
+    date->month = atoi(month);
+    date->year = atoi(year);
+    
+    if(isDateValid(date) == 1) return 1;
+
+    printf("sollte nicht erreicht werden! getdatefromstring!");
+
+    return 0;
 }
