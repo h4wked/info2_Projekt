@@ -31,9 +31,19 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="datastructure.h" />
+		<Unit filename="datetime.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="datetime.h" />
+		<Unit filename="escapesequenzen.h" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="tools.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="tools.h" />
 		<Extensions>
 			<code_completion />
 			<debugger />
