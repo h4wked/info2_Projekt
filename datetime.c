@@ -38,6 +38,8 @@ int isDateValid (TDate * date) {
 
     //31 tage prüfen
 
+    int i=0;
+
     for(i=1; i<13; i+=2)
     {
         if (i==7) i--;
@@ -83,9 +85,9 @@ int isDateValid (TDate * date) {
 int getDateFromString (char * string, TDate * date) {
 
     //Hilfsstring
-    string *year = malloc(char*5)
-    string *month = malloc(char*5)
-    string *day = malloc(char*5)
+    char *year = malloc(char*5)
+    char *month = malloc(char*5)
+    char *day = malloc(char*5)
 
     if( fscanf( string, "%s.%s.%s", day, month, year) < 3) {
         printf("ungültiges format!");
@@ -98,6 +100,49 @@ int getDateFromString (char * string, TDate * date) {
     date->year = atoi(year);
     
     if(isDateValid(date) == 1) return 1;
+
+    printf("sollte nicht erreicht werden! getdatefromstring!");
+
+    return 0;
+}
+
+int isTimeValid (TTime * time) {
+
+    // 1 valid 0 unvalid
+
+    //Pruefung stunden
+    if (time->hour <  24) return 1;
+    if (time->hour >= 0 ) return 1;
+
+    //Prüfung minuten
+    if (time->min <  60) return 1;
+    if (time->min >= 0 ) return 1;
+
+    //Prüfung sekunden
+    if (time->sec <  60) return 1;
+    if (time->sec >= 0 ) return 1;
+
+    return 0;
+}
+
+int getTimeFromString (char * string, TTime * time){
+
+    //Hilfsstring
+    char *hour = malloc(char*5)
+    char *min = malloc(char*5)
+    char *sec = malloc(char*5)
+
+    if( fscanf( string, "%s.%s.%s", hour, min, sec) < 3) {
+        printf("ungültiges format!");
+        return 0;
+    }
+
+    //Eintragen in time-struct
+    time->hour = atoi(hour);
+    time->min = atoi(min);
+    time->sec = atoi(sec);
+
+    if(isTimeValid(time) == 1) return 1;
 
     printf("sollte nicht erreicht werden! getdatefromstring!");
 
