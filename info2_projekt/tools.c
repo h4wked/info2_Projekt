@@ -90,3 +90,9 @@ int askAgain(int Row, int Col)
 }
 
 
+//FUnktioniert nur für Windows
+
+void clearScreen() {
+
+    system("cls");
+}

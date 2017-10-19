@@ -12,11 +12,11 @@ int isLeapYear (TDate * date) {
      * 1 ist schaltjahr
      * 0 ist nicht*/
 
-    if ( (date->year % 400) == 0) return 1;
+    if ( (date->Year % 400) == 0) return 1;
 
-    if ( (date->year % 100) == 0) return 0;
+    if ( (date->Year % 100) == 0) return 0;
 
-    if ( (date->year % 4)   == 0) return 1;
+    if ( (date->Year % 4)   == 0) return 1;
 
     return 0;
 }
@@ -26,15 +26,15 @@ int isDateValid (TDate * date) {
     // 1 valid 0 unvalid
 
     //Pruefung jahr
-    if (date->year < 1) return 0;
-    if (date->year > 2200) return 0;
+    if (date->Year < 1) return 0;
+    if (date->Year > 2200) return 0;
 
     //Prüfung Monat
-    if (date->month < 1) return 0;
-    if (date->month > 12) return 0;
+    if (date->Month < 1) return 0;
+    if (date->Month > 12) return 0;
 
     //Prüfung Tag
-    if (date->day < 1) return 0;
+    if (date->Day < 1) return 0;
 
     //31 tage prüfen
 
@@ -43,9 +43,9 @@ int isDateValid (TDate * date) {
     for(i=1; i<13; i+=2)
     {
         if (i==7) i--;
-        if (i==date->month)
+        if (i==date->Month)
         {
-            if (date->day<32)
+            if (date->Day<32)
             {
                 return 1;
             }
@@ -61,9 +61,9 @@ int isDateValid (TDate * date) {
     for(i=4; i<12; i+=2)
     {
         if (i==6) i++;
-        if (i==date->month)
+        if (i==date->Month)
         {
-            if (date->day<31)
+            if (date->Day<31)
             {
                 return 1;
             }
@@ -74,35 +74,35 @@ int isDateValid (TDate * date) {
         }
     }
     //auf Februar prüfen
-    if (date->month==2)
+    if (date->Month==2)
     {
-        if( isLeapYear(date) && (date->day==29) ) return 1;
-        if( (date->day > 0) && (date->day < 29) ) return 0;
+        printf( "%d",isLeapYear(date) );
+        if( isLeapYear(date) && (date->Day == 29) ) return 1;
+        if( (date->Day > 0) && (date->Day < 29) ) return 1;
     }
-    return 1;
+    return 0;
 }
 
 
-int getDateFromString (char * string, TDate * date)
+int getDateFromString (char * input, TDate * date)
 {
     //Hilfsstring
-    char * year = malloc(char*5);
-    char * month = malloc(char*5);
-    char * day = malloc(char*5);
+    //TESTchar test[] = {"Halo"};
+    char * Year = malloc(sizeof(char)*5);
+    char * Month = malloc(sizeof(char)*5);
+    char * Day = malloc(sizeof(char)*5);
 
-    if( fscanf( string, "%s.%s.%s", day, month, year) < 3) {
-        printf("ungültiges format!");
+    if( (sscanf( input, "%2s.%2s.%4s", Day, Month, Year)) < 3) {
+        printf("\nungueltiges Format!\n\n");
         return 0;
     }
 
     //Eintragen in date-struct
-    date->day = atoi(day);
-    date->month = atoi(month);
-    date->year = atoi(year);
+    date->Day = atoi(Day);
+    date->Month = atoi(Month);
+    date->Year = atoi(Year);
 
     if(isDateValid(date) == 1) return 1;
-
-    printf("sollte nicht erreicht werden! getdatefromstring!");
 
     return 0;
 }
@@ -112,40 +112,40 @@ int isTimeValid (TTime * time) {
     // 1 valid 0 unvalid
 
     //Pruefung stunden
-    if (time->hour <  24) return 1;
-    if (time->hour >= 0 ) return 1;
+    if (time->Hour >=  24) return 0;
+    if (time->Hour < 0 ) return 0;
 
-    //Prüfung minuten
-    if (time->min <  60) return 1;
-    if (time->min >= 0 ) return 1;
+    //Prüfung Minuteuten
+    if (time->Minute >=  60) return 0;
+    if (time->Minute < 0 ) return 0;
 
     //Prüfung sekunden
-    if (time->sec <  60) return 1;
-    if (time->sec >= 0 ) return 1;
+    if (time->Second >= 60) return 0;
+    if (time->Second < 0 ) return 0;
 
-    return 0;
+    return 1;
 }
 
 int getTimeFromString (char * string, TTime * time){
 
     //Hilfsstring
-    char *hour = malloc(char*5);
-    char *min = malloc(char*5);
-    char *sec = malloc(char*5);
+    char * Hour = malloc(sizeof(char)*5);
+    char * Minute = malloc(sizeof(char)*5);
+    char * Second = malloc(sizeof(char)*5);
 
-    if( fscanf( string, "%s.%s.%s", hour, min, sec) < 3) {
-        printf("ungültiges format!");
+    int i;
+    if( (i = sscanf( string, "%2s:%2s:%2s", Hour, Minute, Second)) < 3) {
+            printf("ungueltiges Format!\n");
         return 0;
     }
 
     //Eintragen in time-struct
-    time->hour = atoi(hour);
-    time->min = atoi(min);
-    time->sec = atoi(sec);
+    time->Hour = atoi(Hour);
+    time->Minute = atoi(Minute);
+    time->Second = atoi(Second);
 
     if(isTimeValid(time) == 1) return 1;
 
-    printf("sollte nicht erreicht werden! getdatefromstring!");
 
     return 0;
 }

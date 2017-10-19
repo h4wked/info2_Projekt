@@ -3,17 +3,17 @@
 
 typedef struct {
 
-    int day;
-    int month;
-    int year;
+    int Day;
+    int Month;
+    int Year;
 
 } TDate;
 
 typedef struct {
 
-    int sec;
-    int min;
-    int hour;
+    int Second;
+    int Minute;
+    int Hour;
 
 } TTime;
 

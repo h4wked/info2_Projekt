@@ -1,9 +1,9 @@
 CFLAGS=-W -Wall -Werror -o3
 
-all: clean ueb01
+all: clean main
 
-ueb01:
+main:
 	$(CC) $(CFLAGS) -o $@ $@.c
 
 clean:
-	$(RM) ueb01
+	$(RM) main

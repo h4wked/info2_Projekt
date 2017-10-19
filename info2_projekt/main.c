@@ -16,7 +16,7 @@ int main()
 
       inputDate();
       inputTime();
-   } while (askYesOrNo("Moechten Sie noch einmal (j/n) ? "));
+   } while ( 0 /*askYesOrNo("Moechten Sie noch einmal (j/n) ? ")*/);   //TODO!!!!
 
    return 0;
 }
