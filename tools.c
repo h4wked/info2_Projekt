@@ -5,6 +5,7 @@
 
 
 #include <stdio.h>
+#include <stdlib.h>
 #include "escapesequenzen.h"
 #include "tools.h"
 
@@ -28,7 +29,7 @@ void clearBuffer()
 *   askAgain
 *   Fragt den Benutzer, ob das Programm noch einmal durchlaufen werden soll.
 *******************************************************************************/
-int askAgain(int Row, int Col)
+/*int askAgain(int Row, int Col)
 {
 	int KorrekteEingabe;			//Variable, die kennzeichnet, ob der Benutzer eine korrekte Eingabe gemacht hat
 	char Answear;				//Variable, die als Wert die Antwort des Beunutzers hat
@@ -87,7 +88,7 @@ int askAgain(int Row, int Col)
 	}											//gespeichert ist
 
 	return 0;
-}
+}*/
 
 
 //FUnktioniert nur für Windows
@@ -95,4 +96,25 @@ int askAgain(int Row, int Col)
 void clearScreen() {
 
     system("cls");
+}
+
+int askYesOrNo(char * phrase) {
+
+    char Answear;
+    printf("%s\n",phrase);
+    scanf("%c",&Answear);
+    clearBuffer();
+    if ( (Answear == 'J') || (Answear == 'j') || (Answear == 'Y') || (Answear == 'y') )
+	{
+		return 1;		//Benutzer möchte noch einmal
+	}
+	else if ( (Answear == 'N') || (Answear == 'n') )
+	{
+		return 0;		//Benutzer möchte das Programm beenden
+	}
+	else
+	{
+
+		return 0;		//in der Variablen 'Answear' kein gültiger Wert
+	}
 }

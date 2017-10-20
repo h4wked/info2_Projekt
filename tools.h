@@ -13,7 +13,8 @@
 	*   askAgain
 	*   Fragt den Benutzer, ob das Programm noch einmal durchlaufen werden soll.
 	*******************************************************************************/
-	int askAgain(int Row, int Col);
+	//int askAgain(int Row, int Col);
 	void clearScreen();
+	int askYesOrNo(char * phrase);
 
 #endif
