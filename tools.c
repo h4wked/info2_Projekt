@@ -118,3 +118,10 @@ int askYesOrNo(char * phrase) {
 		return 0;		//in der Variablen 'Answear' kein gültiger Wert
 	}
 }
+
+void printLine(char c, int num) {
+    for(int i = 0; i++; i<num) {
+        printf("%c", c);
+    }
+    printf("\n");
+}

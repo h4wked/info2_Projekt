@@ -16,5 +16,6 @@
 	//int askAgain(int Row, int Col);
 	void clearScreen();
 	int askYesOrNo(char * phrase);
+    void printLine(char c, int num);
 
 #endif
