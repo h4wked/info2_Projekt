@@ -1,6 +1,11 @@
 #ifndef DATASTRUCTURE_H
 #define DATASTRUCTURE_H
 
+#define MAXPLAYER 23
+
+extern int TeamCounter;
+extern TTeam Teams[];
+
 typedef struct {
 
     int Day;
@@ -16,5 +21,19 @@ typedef struct {
     int Hour;
 
 } TTime;
+
+typedef struct {
+    char * name;
+    TDate * birthday;
+    int nr;
+    int goals;
+}TPlayer;
+
+typedef struct {
+    char * name;
+    char * coach;
+    int numberOfPlayers;
+    TPlayer player[MAXPLAYER];
+}TTeam;
 
 #endif
