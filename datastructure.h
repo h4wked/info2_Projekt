@@ -4,7 +4,7 @@
 #define MAXPLAYER 23
 
 extern int TeamCounter;
-extern TTeam Teams[];
+
 
 typedef struct {
 
@@ -35,5 +35,7 @@ typedef struct {
     int numberOfPlayers;
     TPlayer player[MAXPLAYER];
 }TTeam;
+
+extern TTeam Teams[];
 
 #endif
