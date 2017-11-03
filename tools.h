@@ -17,5 +17,6 @@
 	void clearScreen();
 	int askYesOrNo(char * phrase);
     void printLine(char c, int num);
+    void waitForEnter();
 
 #endif

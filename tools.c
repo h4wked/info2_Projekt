@@ -104,7 +104,8 @@ int askYesOrNo(char * phrase) {
     char Answear;
     printf("%s\n",phrase);
     scanf("%c",&Answear);
-    clearBuffer();
+    if (Answear != '\n')
+        clearBuffer();
     if ( (Answear == 'J') || (Answear == 'j') || (Answear == 'Y') || (Answear == 'y') )
 	{
 		return 1;		//Benutzer möchte noch einmal
@@ -125,4 +126,11 @@ void printLine(char c, int num) {
         printf("%c", c);
     }
     printf("\n");
+}
+
+void waitForEnter() {
+    printf("\nBitte Eingabetaste drücken!\n");
+    char enter = 0;
+    clearBuffer();
+    //while( getchar() != '\n' );
 }

@@ -1,8 +1,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include <menu.h>
-
+#include "menu.h"
+#include "tools.h"
 
 int main(int argc, char * argv[]) {
 
@@ -19,43 +19,45 @@ int main(int argc, char * argv[]) {
 
     int choice;
 
-    while(choice != 8){
+    do{
         choice = getMenu("Mannschaftsverwaltung V0.01", menu, 8);
 
         switch(choice) {
 
         case 1:
-            printf("Neue Mannschaft anlegen\n");
+            printf("createTeam\n");
             printLine('-', 30);
             break;
         case 2:
-            printf("Spieler hinzufuegen\n");
+            printf("addPlayer\n");
             printLine('-', 30);
             break;
         case 3:
-            printf("Spieler loeschen\n");
+            printf("deletePlayer\n");
             printLine('-', 30);
             break;
         case 4:
-            printf("Suchen\n");
+            printf("deleteTeam\n");
             printLine('-', 30);
             break;
         case 5:
-            printf("Neue Mannschaft anlegen\n");
+            printf("searchPlayer\n");
             printLine('-', 30);
             break;
         case 6:
-            printf("Neue Mannschaft anlegen\n");
+            printf("sortTeams\n");
             printLine('-', 30);
             break;
         case 7:
-            printf("Neue Mannschaft anlegen\n");
+            printf("listTeams\n");
             printLine('-', 30);
             break;
+        case 8:
+            printf("Programm wird beendet!\n");
+            break;
+
         }
-        printf("\nBitte Eingabetaste drücken!\n");
-        char enter = 0;
-        clearBuffer();
-        while( getchar() != '\n' );
-    }
+        waitForEnter();
+
+    }while(choice != 8);
 }
