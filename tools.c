@@ -95,7 +95,8 @@ void clearBuffer()
 
 void clearScreen() {
 
-    system("cls");
+    system("clear");
+    //system("cls");
 }
 
 int askYesOrNo(char * phrase) {
@@ -120,7 +121,7 @@ int askYesOrNo(char * phrase) {
 }
 
 void printLine(char c, int num) {
-    for(int i = 0; i++; i<num) {
+    for(int i = 0; i<num; i++) {
         printf("%c", c);
     }
     printf("\n");
