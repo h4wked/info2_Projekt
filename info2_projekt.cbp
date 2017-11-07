@@ -29,7 +29,9 @@
 			</Target>
 		</Build>
 		<Compiler>
-			<Add option="-Wall" />
+			<Add option="-O3" />
+			<Add option="-w" />
+			<Add option="-std=c++14" />
 		</Compiler>
 		<Unit filename="datastructure.h" />
 		<Unit filename="datetime.c">
@@ -47,6 +49,7 @@
 		<Unit filename="team.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="team.h" />
 		<Unit filename="tools.c">
 			<Option compilerVar="CC" />
 		</Unit>

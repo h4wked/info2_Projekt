@@ -2,6 +2,9 @@
 #define DATASTRUCTURE_H
 
 #define MAXPLAYER 23
+#define MAXTEAMS 40
+
+#define MAXNAMELENGTH 40
 
 
 typedef struct {

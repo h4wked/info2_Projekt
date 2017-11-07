@@ -76,7 +76,6 @@ int isDateValid (TDate * date) {
     //auf Februar prüfen
     if (date->Month==2)
     {
-        printf( "%d",isLeapYear(date) );
         if( isLeapYear(date) && (date->Day == 29) ) return 1;
         if( (date->Day > 0) && (date->Day < 29) ) return 1;
     }
@@ -87,7 +86,6 @@ int isDateValid (TDate * date) {
 int getDateFromString (char * input, TDate * date)
 {
     //Hilfsstring
-    //TESTchar test[] = {"Halo"};
     char * Year = malloc(sizeof(char)*5);
     char * Month = malloc(sizeof(char)*5);
     char * Day = malloc(sizeof(char)*5);
@@ -102,9 +100,9 @@ int getDateFromString (char * input, TDate * date)
     date->Month = atoi(Month);
     date->Year = atoi(Year);
 
-    if(isDateValid(date) == 1) return 1;
+    if(isDateValid(date) == 1) return EXIT_SUCCESS;
 
-    return 0;
+    return EXIT_FAILURE;
 }
 
 int isTimeValid (TTime * time) {

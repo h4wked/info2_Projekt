@@ -34,5 +34,5 @@ int getMenu(char * menuTitle, char * menuPoints[], int numberOfPoints) {
             continue;
         }
     }
-    return 0;
+    return choice;
 }

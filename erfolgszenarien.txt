@@ -1,0 +1,16 @@
+Erstellung eines Teams:
+
+Erfolg:
+1. Menupunkt team erstellen wird gewählt
+2. Anezige überschrift
+3. Erhöhung des TeamCounters
+4. Aufruf der createTeam() Funktion
+5. Eingabe des Teamnamens
+6. Eingabe des Trainers
+7. Eingabe eines Spielers
+8. Abfrage ob weiterer Spieler eingegeben werden soll
+
+Alternative:
+5. Eingaben schlagen fehl
+6. Dekrementierung des Teamcounters
+7. Frage ob Teamerstellung wiederholt werden soll

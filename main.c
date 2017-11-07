@@ -1,10 +1,17 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#include "datastructure.h"
 #include "menu.h"
 #include "tools.h"
+#include "team.h"
+
+int TeamCounter = 0;
+TTeam Teams[MAXTEAMS];
 
 int main(int argc, char * argv[]) {
+
+
 
     char * menu[] = {
         "1. Neue Mannschaft anlegen",
@@ -27,6 +34,18 @@ int main(int argc, char * argv[]) {
         case 1:
             printf("createTeam\n");
             printLine('-', 30);
+            waitForEnter();
+
+            while(createTeam() != EXIT_SUCCESS) {               /*Fehlerbehandlung falls createTeam fehlschlägt*/
+                char phrase[] = "Erstellung eines Teams fehlgeschlagen!\nSoll Sie wiederholt werden?\n";
+                if(askYesOrNo(phrase) == EXIT_SUCCESS){         /*Frage ob Teamerstellung wiederholt werden soll*/
+                    clearScreen();
+                    continue;
+                }else{
+                    TeamCounter++;
+                }
+                free(phrase);
+            }
             break;
         case 2:
             printf("addPlayer\n");
