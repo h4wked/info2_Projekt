@@ -37,15 +37,17 @@ int main(int argc, char * argv[]) {
             waitForEnter();
 
             while(createTeam() != EXIT_SUCCESS) {               /*Fehlerbehandlung falls createTeam fehlschlägt*/
-                char phrase[] = "Erstellung eines Teams fehlgeschlagen!\nSoll Sie wiederholt werden?\n";
+                clearScreen();
+                char phrase[] = "Erstellung eines Teams fehlgeschlagen! Soll Sie wiederholt werden? (j/n)";
                 if(askYesOrNo(phrase) == EXIT_SUCCESS){         /*Frage ob Teamerstellung wiederholt werden soll*/
                     clearScreen();
                     continue;
                 }else{
-                    TeamCounter++;
+                    break;
                 }
                 free(phrase);
             }
+            TeamCounter++;
             break;
         case 2:
             printf("addPlayer\n");
@@ -70,9 +72,22 @@ int main(int argc, char * argv[]) {
         case 7:
             printf("listTeams\n");
             printLine('-', 30);
+            listTeams();
             break;
         case 8:
             printf("Programm wird beendet!\n");
+            for(int i = 0; i < TeamCounter; i++) {
+                free(Teams[i].name);
+                if(Teams[i].coach != NULL) {
+                    free(Teams[i].name);
+                }
+                for(int c = 0; c < Teams[i].numberOfPlayers; c++) {
+                    free(Teams[i].player[c].name);
+                    if(Teams[i].player[c].birthday != NULL) {
+                        free(Teams[i].player[c].birthday);
+                    }
+                }
+            }
             break;
 
         }

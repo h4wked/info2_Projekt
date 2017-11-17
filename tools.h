@@ -18,5 +18,6 @@
 	int askYesOrNo(char * phrase);
     void printLine(char c, int num);
     void waitForEnter();
+    int getText(char * prompt, int allowedChars, int emptyAllowed, char ** target);
 
 #endif

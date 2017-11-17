@@ -147,3 +147,28 @@ int getTimeFromString (char * string, TTime * time){
 
     return 0;
 }
+
+void getDate(char * question, int num) {
+
+    int scanErg;
+    printf("%s",question);
+    char * input[10];
+    scanErg = scanf("%39[^\n]", input);
+    if(scanErg == 0) {
+        Teams[TeamCounter].player[num].birthday = NULL;
+    }else{
+        TDate * birthday = malloc(sizeof(TDate));
+        if(getDateFromString(input, birthday) == EXIT_SUCCESS) {
+            Teams[TeamCounter].player[num].birthday = birthday;
+        }else{
+            printf("\n\nGeburtsdatum ungültig\n");
+            free(birthday);
+            return EXIT_FAILURE;
+        }
+    }
+}
+
+void printDate(TDate * date) {
+
+    printf("%2d.%2d.%4d", date->Day, date->Month, date->Year);
+}

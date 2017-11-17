@@ -14,3 +14,12 @@ Alternative:
 5. Eingaben schlagen fehl
 6. Dekrementierung des Teamcounters
 7. Frage ob Teamerstellung wiederholt werden soll
+
+Ausgabe der Mannschaften
+
+1. Benutzer ruft menupunkt 7 auflisten auf
+2. switch case 7 listTeams auf
+3. listTeams ruft in einer Schleife 0 bis >teamcounter listOneTeam
+4. listOneTeam gibt Name und Trainer des Teams aus
+5. '' ruft von 0 bis >.numberOfPlayers listOnePlayer auf
+6. listOnePlayer gibt name Trikotnummer aus, ruft getDate printDate auf

@@ -108,16 +108,16 @@ int askYesOrNo(char * phrase) {
         clearBuffer();
     if ( (Answear == 'J') || (Answear == 'j') || (Answear == 'Y') || (Answear == 'y') )
 	{
-		return 1;		//Benutzer möchte noch einmal
+		return EXIT_SUCCESS;		//Benutzer möchte noch einmal
 	}
 	else if ( (Answear == 'N') || (Answear == 'n') )
 	{
-		return 0;		//Benutzer möchte das Programm beenden
+		return EXIT_FAILURE;		//Benutzer möchte das Programm beenden
 	}
 	else
 	{
 
-		return 0;		//in der Variablen 'Answear' kein gültiger Wert
+		return EXIT_FAILURE;		//in der Variablen 'Answear' kein gültiger Wert
 	}
 }
 
@@ -133,4 +133,39 @@ void waitForEnter() {
     char enter = 0;
     clearBuffer();
     //while( getchar() != '\n' );
+}
+
+int getText(char * prompt, int allowedChars, int emptyAllowed, char ** target) {
+
+    printf("%s", prompt);
+
+    char * input = calloc(allowedChars, sizeof(char));
+    int scanErg;
+
+    if(scanErg = scanf("%39[^\n]", input) > 0) {
+
+        clearBuffer();
+        int strLen = strlen(input);
+        *target = calloc(strLen+1, sizeof(char));
+
+        strcpy(*target, input);
+
+        free(input);
+        return EXIT_SUCCESS;
+
+    }else if(emptyAllowed) {
+
+        clearBuffer();
+        *target = NULL;
+        free(input);
+        return EXIT_SUCCESS;
+
+    }else{
+
+        clearBuffer();
+        printf("Invalid input!\n");
+        free(input);
+        return EXIT_FAILURE;
+
+    }
 }

@@ -29,7 +29,6 @@
 			</Target>
 		</Build>
 		<Compiler>
-			<Add option="-O3" />
 			<Add option="-w" />
 			<Add option="-std=c++14" />
 		</Compiler>

@@ -17,33 +17,18 @@ int createTeam() {
     printLine('=', 30);
     Teams[TeamCounter].numberOfPlayers = 0;                     /*initialize Players as 0*/
 
-    char * teamName = calloc(MAXNAMELENGTH, sizeof(char));      /*input Teamname*/
-
-    printf("\nGeben Sie den Namen der Mannschaft ein!\n-> ");
-    if(scanf("%s", teamName) > 0) {
-        Teams[TeamCounter].name = teamName;
-        clearBuffer();
+    if(getText("\nGeben Sie den Namen der Mannschaft ein!\n-> ", MAXNAMELENGTH, 0, &((Teams + TeamCounter)->name)) == EXIT_SUCCESS) {
     }else{
-        printf("Invalid input!\n");
-        sleep(2);
-        free(teamName);
-        memset(&Teams[TeamCounter], 0, sizeof(Teams[0])); /*cleanup invalid data*/
+        memset(&Teams[TeamCounter], 0, sizeof(Teams[TeamCounter]));
         return EXIT_FAILURE;
     }
 
-    char *coachName = calloc(MAXNAMELENGTH, sizeof(char));      /*input Coachname */
-    printf("Geben Sie den Namen des Trainers ein!\n-> ");
-    if(scanf("%s", coachName) > 0) {
-        clearBuffer();
-        Teams[TeamCounter].name = teamName;
+    if(getText("Geben Sie den Namen des Trainers ein!\n-> ", MAXNAMELENGTH, 1, &((Teams + TeamCounter)->coach)) == EXIT_SUCCESS) {
     }else{
-        printf("Invalid input!\n");
-        sleep(2);
-        free(teamName);
-        free(coachName);
-        memset(&Teams[TeamCounter], 0, sizeof(Teams[0])); /*cleanup invalid data*/
+        memset(&Teams[TeamCounter], 0, sizeof(Teams[TeamCounter]));
         return EXIT_FAILURE;
     }
+
 
     do {
         if(createPlayer() == EXIT_SUCCESS) {
@@ -53,7 +38,9 @@ int createTeam() {
             sleep(2);
         }
 
-    }while(askYesOrNo("\n\nMoechten Sie einen weiteren Spieler eingeben?") == EXIT_SUCCESS);
+    }while(askYesOrNo("\n\nMoechten Sie einen weiteren Spieler eingeben? (j/n)") == EXIT_SUCCESS);
+
+    return EXIT_SUCCESS;
 
 }
 
@@ -62,41 +49,22 @@ void deleteTeam() {
 
 int createPlayer() {
 
+    int scanErg;
     printf("\nErfassung der Spieler\n");
     printLine('=', 30);
-    char * playerName = calloc(MAXNAMELENGTH, sizeof(char));      /*input Playername*/
     int playerArrayNum = Teams[TeamCounter].numberOfPlayers;
 
-    printf("Geben Sie den Namen des Spielers ein!\n-> ");
-    if(scanf("%s", playerName) > 0) {
-                Teams[TeamCounter].player[playerArrayNum].name = playerName;
-    }else{
-        printf("Invalid input!\n");
-        free(playerName);
-        return EXIT_FAILURE;
-    }
+    getText("Geben Sie den Namen des Spielers ein!\n-> ", MAXNAMELENGTH, 0, &((Teams + TeamCounter)->player[playerArrayNum].name));         //Playername
 
-    printf("\nGeben Sie falls ggf. das Geburtsdatum des Spielers ein!\n"); /*input birthday*/
-    char * input[10];
-    scanf("%s", input);
-    if(input[0] == '\n') {
-        Teams[TeamCounter].player[playerArrayNum].birthday = NULL;
-    }else{
-        TDate * birthday = malloc(sizeof(TDate));
-        if(getDateFromString(input, birthday) == EXIT_SUCCESS) {
-            Teams[TeamCounter].player[playerArrayNum].birthday = birthday;
-        }else{
-            printf("\n\nEingabe/Geburtsdatum ungültig\n");
-            free(birthday);
-            return EXIT_FAILURE;
-        }
-    }
+    getDate("\nGeben Sie falls ggf. das Geburtsdatum des Spielers ein!\n", playerArrayNum);                                                 //Birthday
 
-    int jerseyNr, scanErg;
-    printf("\nGeben Sie die Trikotnummer des Spielers ein! ");
-    scanErg = scanf("%d", jerseyNr);
+    int jerseyNr;
+    printf("\nGeben Sie die Trikotnummer des Spielers ein!\n-> ");                                                                          //JerseyNum
+    scanErg = scanf("%d", &jerseyNr);
+    clearBuffer();
 
     if(scanErg <= 0) {
+        clearBuffer();
         printf("invalid input!\n");
         return EXIT_FAILURE;
     }else{
@@ -117,4 +85,39 @@ void sortTeams() {
 }
 
 void listTeams() {
+    clearScreen();
+    printf("Liste der Mannschaften\n");
+    printLine('=', 30);
+    for(int c = 0; c < TeamCounter; c++) {
+        listOneTeam(c);
+    }
+}
+
+void listOneTeam(int currentTeam) {
+    printf("\nName:           : %s\n",Teams[currentTeam].name);
+
+    if(Teams[currentTeam].coach != NULL) {
+        printf("Trainer         : %s\n",Teams[currentTeam].coach);
+    }
+
+    printf("Anzahl Spieler  : %d\n", Teams[currentTeam].numberOfPlayers);
+
+    printf("Spieler:\n");
+    for(int c = 0; c < Teams[currentTeam].numberOfPlayers; c++) {
+        printf("\t%2d: ",c+1);
+        listOnePlayer(&(Teams[currentTeam].player[c]));
+    }
+}
+
+void listOnePlayer(TPlayer * player) {
+
+    printf("%s",player->name);
+    printf(" (%d",player->nr);
+    if(player->birthday != NULL) {
+        printf(", * ");
+        printDate(player->birthday);
+        printf(")\n");
+    }else{
+        printf(")\n");
+    }
 }
