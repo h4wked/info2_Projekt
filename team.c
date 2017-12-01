@@ -54,7 +54,9 @@ int createPlayer() {
     printLine('=', 30);
     int playerArrayNum = Teams[TeamCounter].numberOfPlayers;
 
-    getText("Geben Sie den Namen des Spielers ein!\n-> ", MAXNAMELENGTH, 0, &((Teams + TeamCounter)->player[playerArrayNum].name));         //Playername
+    if((getText("Geben Sie den Namen des Spielers ein!\n-> ", MAXNAMELENGTH, 0, &((Teams + TeamCounter)->player[playerArrayNum].name))) == EXIT_FAILURE) {
+       return EXIT_FAILURE;
+       }         //Playername
 
     getDate("\nGeben Sie falls ggf. das Geburtsdatum des Spielers ein!\n", playerArrayNum);                                                 //Birthday
 
@@ -64,7 +66,6 @@ int createPlayer() {
     clearBuffer();
 
     if(scanErg <= 0) {
-        clearBuffer();
         printf("invalid input!\n");
         return EXIT_FAILURE;
     }else{
