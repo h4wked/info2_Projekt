@@ -58,7 +58,7 @@ int createPlayer() {
        return EXIT_FAILURE;
        }         //Playername
 
-    getDate("\nGeben Sie falls ggf. das Geburtsdatum des Spielers ein!\n", playerArrayNum);                                                 //Birthday
+    getDate("\nGeben Sie ggf. das Geburtsdatum des Spielers ein!\n", playerArrayNum);                                                 //Birthday
 
     int jerseyNr;
     printf("\nGeben Sie die Trikotnummer des Spielers ein!\n-> ");                                                                          //JerseyNum
@@ -87,10 +87,14 @@ void sortTeams() {
 
 void listTeams() {
     clearScreen();
-    printf("Liste der Mannschaften\n");
-    printLine('=', 30);
-    for(int c = 0; c < TeamCounter; c++) {
-        listOneTeam(c);
+    if(TeamCounter == 0) {
+        printf("Keine Mannschaften vorhanden!\n");
+    }else{
+        printf("Liste der Mannschaften\n");
+        printLine('=', 30);
+        for(int c = 0; c < TeamCounter; c++) {
+            listOneTeam(c);
+        }
     }
 }
 

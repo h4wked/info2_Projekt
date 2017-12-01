@@ -34,7 +34,6 @@ int main(int argc, char * argv[]) {
         case 1:
             printf("createTeam\n");
             printLine('-', 30);
-            waitForEnter();
 
             while(createTeam() != EXIT_SUCCESS) {               /*Fehlerbehandlung falls createTeam fehlschlägt*/
                 clearScreen();

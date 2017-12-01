@@ -90,6 +90,7 @@ int getDateFromString (char * input, TDate * date)
     char * Month = malloc(sizeof(char)*5);
     char * Day = malloc(sizeof(char)*5);
 
+
     if( (sscanf( input, "%2s.%2s.%4s", Day, Month, Year)) < 3) {
         printf("\nungueltiges Format!\n\n");
         return 0;
@@ -170,5 +171,5 @@ void getDate(char * question, int num) {
 
 void printDate(TDate * date) {
 
-    printf("%2d.%2d.%4d", date->Day, date->Month, date->Year);
+    printf("%d.%d.%d", date->Day, date->Month, date->Year);
 }

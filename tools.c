@@ -102,23 +102,21 @@ void clearScreen() {
 int askYesOrNo(char * phrase) {
 
     char Answear;
-    printf("%s\n",phrase);
-    scanf("%c",&Answear);
-    if (Answear != '\n')
-        clearBuffer();
-    if ( (Answear == 'J') || (Answear == 'j') || (Answear == 'Y') || (Answear == 'y') )
-	{
+    do{
+        printf("%s\n",phrase);
+        scanf("%c",&Answear);
+        if (Answear != '\n')
+            clearBuffer();
+        if ( (Answear == 'J') || (Answear == 'j') || (Answear == 'Y') || (Answear == 'y') )
+        {
 		return EXIT_SUCCESS;		//Benutzer möchte noch einmal
-	}
-	else if ( (Answear == 'N') || (Answear == 'n') )
-	{
-		return EXIT_FAILURE;		//Benutzer möchte das Programm beenden
-	}
-	else
-	{
-
-		return EXIT_FAILURE;		//in der Variablen 'Answear' kein gültiger Wert
-	}
+        }
+        else if ( (Answear == 'N') || (Answear == 'n') )
+        {
+            return EXIT_FAILURE;		//Benutzer möchte das Programm beenden
+        }
+        printf("ungültige eingabe!");
+    }while(1);
 }
 
 void printLine(char c, int num) {
