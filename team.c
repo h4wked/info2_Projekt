@@ -35,7 +35,7 @@ int createTeam() {
             Teams[TeamCounter].numberOfPlayers++;
         }else{
             printf("\nSpielereingabe Fehlgeschlagen!\n");
-            sleep(2);
+            sleep(1);
         }
 
     }while(askYesOrNo("\n\nMoechten Sie einen weiteren Spieler eingeben? (j/n)") == EXIT_SUCCESS);
