@@ -6,7 +6,7 @@
 #include "tools.h"
 #include "team.h"
 
-#define SAVEFILE "savedata.txt"
+#define SAVEFILE "teams.xml"
 
 int TeamCounter = 0;
 TTeam Teams[MAXTEAMS];
