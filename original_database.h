@@ -9,12 +9,11 @@
 #define DATABASE_H_
 
 #include "datastructure.h"
-#include "datetime.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-void save(const char * url); // Speichere alle teams in die Datei url
+void save(const char * url , TTeam teams[], size_t nrofteams); // Speichere alle teams in die Datei url
 void saveTeam(TTeam * sav,FILE * out); // speichere Team sav in die Datei out
 void savePlayer(TPlayer * sav,FILE * out); // speichere  Spieler sav in die Datei out
 

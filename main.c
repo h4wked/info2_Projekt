@@ -6,11 +6,12 @@
 #include "tools.h"
 #include "team.h"
 
+#define SAVEFILE "savedata.txt"
+
 int TeamCounter = 0;
 TTeam Teams[MAXTEAMS];
 
 int main(int argc, char * argv[]) {
-
 
 
     char * menu[] = {
@@ -25,6 +26,7 @@ int main(int argc, char * argv[]) {
     };
 
     int choice;
+    load(SAVEFILE);                 /*LADEN*/
 
     do{
         choice = getMenu("Mannschaftsverwaltung V0.01", menu, 8);
@@ -75,6 +77,7 @@ int main(int argc, char * argv[]) {
             break;
         case 8:
             printf("Programm wird beendet!\n");
+            save(SAVEFILE);
             for(int i = 0; i < TeamCounter; i++) {
                 free(Teams[i].name);
                 if(Teams[i].coach != NULL) {

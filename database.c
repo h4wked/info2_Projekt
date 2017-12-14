@@ -3,7 +3,7 @@
 
 
 
-void save(const char * url , TTeam teams[], size_t nrofteams){
+void save(const char * url){
 	FILE * file;
 	if(!(file = fopen(url,"w"))){
 		 	puts("Fehler beim schreiben der Datei: ");
@@ -12,8 +12,8 @@ void save(const char * url , TTeam teams[], size_t nrofteams){
 	}
 	fputs("<Daten>\n",file);
 
-	for( int i=0; i < nrofteams;++i){
-		saveTeam(&teams[i],file);
+	for( int i=0; i < TeamCounter;++i){
+		saveTeam(&Teams[i],file);
 	}
 
 	fclose(file);
@@ -22,8 +22,9 @@ void save(const char * url , TTeam teams[], size_t nrofteams){
 void saveTeam(TTeam * sav,FILE * out){
 	fputs("\t<Team>\n",out);
 	fputs("\t\t<Name>",out); fputs(sav->name, out ); fputs("</Name>\n",out);
-	fputs("\t\t<Trainer>",out); fputs(sav->coach, out ); fputs("</Trainer>\n",out);
-
+	if(sav->coach != NULL) {
+        fputs("\t\t<Trainer>",out); fputs(sav->coach, out ); fputs("</Trainer>\n",out);
+	}
 	for( int i = 0; i < sav->numberOfPlayers ; i++){
 		savePlayer(&sav->player[i],out);
 	}
@@ -61,6 +62,7 @@ int startDaten(FILE * f){
 		puts("reading team!");
 		while(startTeam(f)){
 			puts("reading next team!");
+			TeamCounter++;
 		}
 		free(line);
 		return endDaten(f);
@@ -83,33 +85,111 @@ int endDaten(FILE * f){
 }
 int startTeam(FILE * f){
 	char *  line = (char*)calloc(128,sizeof(char));
+
 	if(!readLine(line,128,f)){
 		free(line);
 		return 0;
 	}
 	if(!strnncmp(line,"<Team>")){
 		puts("reading Team!");
-		if(!readLine(line,128,f)){
+		Teams[TeamCounter]->numberOfPlayers = 0;
+		Teams[TeamCounter]->name == NULL;
+        Teams[TeamCounter]->coach == NULL;
+
+		char * buff = malloc(sizeof(char)*MAXNAMELENGTH);
+
+		while() {
+
+            if(!readLine(line,128,f)){
 				free(line);
 				return 0;
-		}
-		if(!strnncmp(line,"<Name>")){
-			//readTag(line,"Name",buff)
-		}else if(!strnncmp(line,"<Trainer>")){
-			//readTag(line,"Name",buff)
-		}else if(!strnncmp(line,"<Player>")){
-			// while(startPlayer(f)){ ... }
+            }
 
-		}
+            if(!strnncmp(line,"</Team>")){
+                free(line);
+                if(Teams[TeamCounter]->name == NULL) {
+                    printf("Team has no name !\n");
+                    sleep(1);
+                    return 0;
+                }
+                return 1;
+            }
 
-		//free(buff);
-		free(line);
-		return endTeam(f);
+            if(!strnncmp(line,"<Name>")){
+                readTag(line,"Name",buff);
+                char * data = calloc(strlen(buff), sizeof(char));
+                strcpy(data, buff)
+                (Teams + TeamCounter)->name = data;
+                continue;
+
+            }else if(!strnncmp(line,"<Trainer>")){
+                readTag(line,"Name",buff);
+                char * data = calloc(strlen(buff), sizeof(char));
+                strcpy(data, buff)
+                (Teams + TeamCounter)->coach = data;
+                continue;
+
+            }else if(!strnncmp(line,"<Player>")){
+                if(startPlayer(f, Teams->player[Teams[TeamCounter]->numberOfPlayers]){
+                    Teams[TeamCounter]->numberOfPlayers++;
+                }
+                continue;
+
+            }
+
+            //free(buff);
+            free(line);
+            printf("unexpected line! loading failed!\n");
+            sleep(1);
+            return 0;
+        }
 	}
 	free(line);
 	return 0;
 }
-int endTeam(FILE * f){
+
+int startPlayer(FILE * f, TPlayer * player) {
+
+    char * line = (char*)calloc(128,sizeof(char));
+    while(!strnncmp(line,"</Player>") {
+
+        if(!readLine(line,128,f)){
+            free(line);
+            return 0;
+        }
+
+        if(!strnncmp(line,"<Name>")){
+            readTag(line,"Name",buff);
+            char * data = calloc(strlen(buff), sizeof(char));
+            strcpy(data, buff)
+            player->name = data;
+            continue;
+        }else if(!strnncmp(line,"<TricotNr>")){
+            readTag(line,"TricotNr",buff);
+            char * data = calloc(strlen(buff), sizeof(char));
+            strcpy(data, buff)
+            player->nr = atoi(data);
+            continue;
+        }else if(!strnncmp(line,"<Goals>")){
+            readTag(line,"Goals",buff);
+            char * data = calloc(strlen(buff), sizeof(char));
+            strcpy(data, buff)
+            player->goals = atoi(data);
+            continue;
+        }else if(!strnncmp(line,"<Birthday>")){
+            readTag(line,"Birthday",buff);
+            char * data = calloc(strlen(buff), sizeof(char));
+            strcpy(data, buff);
+            getDateFromString(data, player->birthday);
+            continue;
+        }else{
+            printf("unexpected line! loading failed!\n");
+            return 0;
+        }
+    }
+    return 1;
+}
+/*int endTeam(FILE * f){
 	char *  line = (char*)calloc(128,sizeof(char));
 	if(!readLine(line,128,f)){
 		free(line);
@@ -121,7 +201,7 @@ int endTeam(FILE * f){
 		}
 	free(line);
 	return 0;
-}
+}*/
 
 int readTag(char * line , const char * tag, char * buff ){
 	char * endtag = (char*) calloc(strlen(tag)+3,sizeof(char));
@@ -133,7 +213,7 @@ int readTag(char * line , const char * tag, char * buff ){
 		size_t start = strlen(starttag);
 		size_t end = strlen(endtag);
 		size_t len = strlen(line);
-		strncpy(buff,&line[start],len-(start+end+1));
+		strncpy(buff,&line[start],len-(start+end/*+1*/));
 		return 1;
 	}
 	free(endtag);
