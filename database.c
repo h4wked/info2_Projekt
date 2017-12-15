@@ -113,7 +113,7 @@ int startTeam(FILE * f){
 
 		while(1) {
 
-            memset(buff, 0, sizeof(buff));
+            memset(buff, '\0', sizeof(char)*MAXNAMELENGTH);
             if(!readLine(line,128,f)){
 				free(line);
 				return 0;
@@ -122,7 +122,7 @@ int startTeam(FILE * f){
             if((Teams+TeamCounter)->numberOfPlayers == MAXPLAYER){
                 do{
                     readLine(line,128,f);
-                }while(!strnncmp(line,"</Team>"));
+                }while(strnncmp(line,"</Team>"));
             }
 
             if(!strnncmp(line,"</Team>")){
@@ -258,8 +258,9 @@ int readTag(char * line , const char * tag, char * buff ){
 	if(!strnncmp(line,starttag) && strstr(line,endtag)){
 		size_t start = strlen(starttag);
 		size_t end = strlen(endtag);
+
 		size_t len = strlen(line);
-		strncpy(buff+'\0',&line[start],len-(start+end+1));
+		strncpy(buff/*+'\0'*/,&line[start],len-(start+end+1));
 		return 1;
 	}
 	free(endtag);
