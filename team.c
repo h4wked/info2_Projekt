@@ -4,9 +4,9 @@
 #include <string.h>
 
 #include "datastructure.h"
+#include "sort.h"
 #include "tools.h"
 #include "datetime.h"
-
 
 /* TeamCounter und Teams[n].numberOfPlayers entprechen der physischen Anzahl an Spielern!! */
 
@@ -63,6 +63,10 @@ int createPlayer() {
     int jerseyNr;
     printf("\nGeben Sie die Trikotnummer des Spielers ein!\n-> ");                                                                          //JerseyNum
     scanErg = scanf("%d", &jerseyNr);
+    if(jerseyNr == 0) {
+        printf("error trikotNr cant be 0!\n");
+        return EXIT_FAILURE;
+    }
     clearBuffer();
 
     if(scanErg <= 0) {
@@ -82,8 +86,36 @@ void deletePlayer() {
 void searchPlayer() {
 }
 
-void sortTeams() {
+void sortTeams(int choice) {
+    char * sortmenu[] = {
+                "Spieler nach Namen sortieren"
+                "Spieler nach Geburtsdatum sortieren"
+                "Spieler nach Trikotnr. Sortieren"
+                "Spieler nach Anzahl geschossener Tore sortieren"
+                "zurueck zum Hauptmenue"
+            };
+    choice = getMenu("Sortieren", sortmenu, 5);
+
+    for(int i = 0; i < TeamCounter; i++) {
+        switch(choice) {
+                case 1:
+                    teamQSort(nameSort);
+                    break;
+                case 2:
+                    teamQSort(birthSort);
+                    break;
+                case 3:
+                    teamQSort(trikotSort);
+                    break;
+                case 4:
+                    teamQSort(goalSort);
+                    break;
+                case 5:
+                    break;
+                }
+    }
 }
+
 
 void listTeams() {
     clearScreen();

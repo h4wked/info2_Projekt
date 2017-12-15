@@ -92,6 +92,7 @@ int getDateFromString (char * input, TDate * date)
 
 
     if( (sscanf( input, "%2s.%2s.%4s", Day, Month, Year)) < 3) {
+        date = NULL;
         printf("\nungueltiges Format!\n\n");
         return 0;
     }

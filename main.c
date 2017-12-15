@@ -69,6 +69,7 @@ int main(int argc, char * argv[]) {
         case 6:
             printf("sortTeams\n");
             printLine('-', 30);
+            sortTeams(choice);
             break;
         case 7:
             printf("listTeams\n");

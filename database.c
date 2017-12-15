@@ -17,32 +17,33 @@ void save(const char * url){
 	}
 
 	fclose(file);
+	fputs("</Daten>\n",file);
 }
 
 void saveTeam(TTeam * sav,FILE * out){
-	fputs("\t<Team>\n",out);
-	fputs("\t\t<Name>",out); fputs(sav->name, out ); fputs("</Name>\n",out);
+	fputs("<Team>\n",out);
+	fputs(" <Name>",out); fputs(sav->name, out ); fputs("</Name>\n\0",out);
 	if(sav->coach != NULL) {
-        fputs("\t\t<Trainer>",out); fputs(sav->coach, out ); fputs("</Trainer>\n",out);
+        fputs(" <Trainer>",out); fputs(sav->coach, out ); fputs("</Trainer>\n",out);
 	}
 	for( int i = 0; i < sav->numberOfPlayers ; i++){
 		savePlayer(&sav->player[i],out);
 	}
-	fputs("\t</Team>\n",out);
+	fputs("</Team>\n",out);
 }
 void savePlayer(TPlayer * player,FILE * fp){
 
-    fprintf(fp, "\t<Player>\n", player->name);
-    fprintf(fp, "\t\t<Name>%s</Name>\n", player->name);
+    fprintf(fp, "<Player>\n", player->name);
+    fprintf(fp, " <Name>%s</Name>\n", player->name);
     if(player->birthday != NULL) {
-        fprintf(fp, "\t\t<Birthday>%d.%d.%d</Birthday>\n",
+        fprintf(fp, " <Birthday>%02d.%02d.%04d</Birthday>\n",
                 player->birthday->Day,
                 player->birthday->Month,
                 player->birthday->Year);
     }
-    fprintf(fp, "\t\t<TricotNr>%d</TricotNr>\n", player->nr);
-    fprintf(fp, "\t\t<Goals>%d</Goals>\n", player->goals);
-    fprintf(fp, " </Player>\n");
+    fprintf(fp, " <TricotNr>%d</TricotNr>\n", player->nr);
+    fprintf(fp, " <Goals>%d</Goals>\n", player->goals);
+    fprintf(fp, "</Player>\n");
     }
 
 int load(const char * url){
@@ -119,12 +120,6 @@ int startTeam(FILE * f){
 				return 0;
             }
 
-            if((Teams+TeamCounter)->numberOfPlayers == MAXPLAYER){
-                do{
-                    readLine(line,128,f);
-                }while(strnncmp(line,"</Team>"));
-            }
-
             if(!strnncmp(line,"</Team>")){
                 free(line);
                 if(((Teams + TeamCounter)->name) == NULL) {
@@ -134,6 +129,13 @@ int startTeam(FILE * f){
                 }
                 return 1;
             }
+
+            if((Teams+TeamCounter)->numberOfPlayers == MAXPLAYER){
+                do{
+                    readLine(line,128,f);
+                }while(strnncmp(line,"</Team>"));
+            }
+
 
             if(!strnncmp(line,"<Name>")){
                 readTag(line,"Name",buff);
@@ -206,24 +208,16 @@ int startPlayer(FILE * f, TPlayer * player) {
             continue;
         }else if(!strnncmp(line,"<TricotNr>")){
             readTag(line,"TricotNr",buff);
-            char * data = calloc(strlen(buff), sizeof(char));
-            strcpy(data, buff);
-            player->nr = atoi(data);
-            free(data);
+            player->nr = atoi(buff);
             continue;
         }else if(!strnncmp(line,"<Goals>")){
             readTag(line,"Goals",buff);
-            char * data = calloc(strlen(buff), sizeof(char));
-            strcpy(data, buff);
-            player->goals = atoi(data);
-            free(data);
+            player->goals = atoi(buff);
             continue;
         }else if(!strnncmp(line,"<Birthday>")){
             readTag(line,"Birthday",buff);
-            char * data = calloc(strlen(buff), sizeof(char));
-            strcpy(data, buff);
             TDate * birthday = malloc(sizeof(TDate));
-            getDateFromString(data, birthday);
+            getDateFromString(buff, birthday);
             player->birthday = birthday;
             continue;
         }else{
@@ -258,9 +252,9 @@ int readTag(char * line , const char * tag, char * buff ){
 	if(!strnncmp(line,starttag) && strstr(line,endtag)){
 		size_t start = strlen(starttag);
 		size_t end = strlen(endtag);
-
 		size_t len = strlen(line);
-		strncpy(buff/*+'\0'*/,&line[start],len-(start+end+1));
+
+		strncpy(buff,&line[start],len-(start+end));
 		return 1;
 	}
 	free(endtag);
@@ -280,6 +274,17 @@ void strtrim(char * buff_in, char * buff_out){
 	}
 
 	strncpy(buff_out,&buff_in[start],(len-start));
+
+    start = 0;
+    while (*(buff_out + start) != '\0')
+    {
+        if (*(buff_out + start) == '\r')
+        {
+            *(buff_out + start) = '\0';
+            break;
+        }
+        start++;
+    }
 }
 int strnncmp(char * str, const char * str2){
 	size_t l = strlen(str2);
