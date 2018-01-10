@@ -85,24 +85,15 @@ int isDateValid (TDate * date) {
 
 int getDateFromString (char * input, TDate * date)
 {
-    //Hilfsstring
-    char * Year = malloc(sizeof(char)*5);
-    char * Month = malloc(sizeof(char)*5);
-    char * Day = malloc(sizeof(char)*5);
 
-
-    if( (sscanf( input, "%2s.%2s.%4s", Day, Month, Year)) < 3) {
+    if(sscanf(input, "%d.%d.%d", &(date->Day), &(date->Month), &(date->Year)) < 3) {
         date = NULL;
-        printf("\nungueltiges Format!\n\n");
-        return 0;
+        printf("Ungueltiges Format!\n\n");
+        return EXIT_FAILURE;
     }
 
-    //Eintragen in date-struct
-    date->Day = atoi(Day);
-    date->Month = atoi(Month);
-    date->Year = atoi(Year);
-
     if(isDateValid(date) == 1) return EXIT_SUCCESS;
+    printf("Datum ungueltig!\n\n");
 
     return EXIT_FAILURE;
 }
@@ -150,20 +141,21 @@ int getTimeFromString (char * string, TTime * time){
     return 0;
 }
 
-void getDate(char * question, int num) {
+int getDate(char * question, int numPlayer, int numTeam) {
 
     int scanErg;
     printf("%s",question);
     char * input[10];
     scanErg = scanf("%39[^\n]", input);
     if(scanErg == 0) {
-        Teams[TeamCounter].player[num].birthday = NULL;
+        Teams[numTeam].player[numPlayer].birthday = NULL;
     }else{
         TDate * birthday = malloc(sizeof(TDate));
         if(getDateFromString(input, birthday) == EXIT_SUCCESS) {
-            Teams[TeamCounter].player[num].birthday = birthday;
+            Teams[numTeam].player[numPlayer].birthday = birthday;
+            return EXIT_SUCCESS;
         }else{
-            printf("\n\nGeburtsdatum ungültig\n");
+            clearBuffer();
             free(birthday);
             return EXIT_FAILURE;
         }

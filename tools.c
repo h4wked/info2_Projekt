@@ -115,7 +115,6 @@ int askYesOrNo(char * phrase) {
         {
             return EXIT_FAILURE;		//Benutzer möchte das Programm beenden
         }
-        printf("ungültige eingabe!");
     }while(1);
 }
 
@@ -137,7 +136,7 @@ int getText(char * prompt, int allowedChars, int emptyAllowed, char ** target) {
 
     printf("%s", prompt);
 
-    char * input = calloc(allowedChars, sizeof(char));
+    char * input = calloc(allowedChars, sizeof(prompt));
     int scanErg;
 
     if(scanErg = scanf("%39[^\n]", input) > 0) {

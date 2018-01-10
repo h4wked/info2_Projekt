@@ -16,7 +16,7 @@ int getMenu(char * menuTitle, char * menuPoints[], int numberOfPoints) {
         printLine('-', 30);
 
         for(int c = 0; c < numberOfPoints; c++) {                   /*Ausgabe der Menupunkte*/
-                if((printf("%s\n",menuPoints[c])) == 0) break;
+                if((printf("%d. %s\n",c+1 ,menuPoints[c])) == 0) break;
         }
 
         printf("\nIhre Wahl: ");                                    /*Benutzereingabe*/

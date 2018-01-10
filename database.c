@@ -15,9 +15,8 @@ void save(const char * url){
 	for( int i=0; i < TeamCounter;++i){
 		saveTeam(&Teams[i],file);
 	}
-
-	fclose(file);
 	fputs("</Daten>\n",file);
+	fclose(file);
 }
 
 void saveTeam(TTeam * sav,FILE * out){
@@ -134,6 +133,8 @@ int startTeam(FILE * f){
                 do{
                     readLine(line,128,f);
                 }while(strnncmp(line,"</Team>"));
+                free(line);
+                return 1;
             }
 
 
@@ -179,10 +180,10 @@ int startPlayer(FILE * f, TPlayer * player) {
     player->nr = 0;
     player->goals = 0;
     player->birthday = NULL;
-    char * buff = malloc(sizeof(char)*MAXNAMELENGTH);
+    char * buff = calloc(MAXNAMELENGTH+1, sizeof(char));
     while(1) {
 
-        memset(buff, 0, strlen(buff));
+        memset(buff, 0, MAXNAMELENGTH+1);
         if(!readLine(line,128,f)){
             free(line);
             return 0;

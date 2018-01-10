@@ -15,14 +15,14 @@ int main(int argc, char * argv[]) {
 
 
     char * menu[] = {
-        "1. Neue Mannschaft anlegen",
-        "2. Spieler hinzufuegen",
-        "3. Spieler loeschen",
-        "4. Mannschaft loeschen",
-        "5. Suchen",
-        "6. Sortieren",
-        "7. Auflisten",
-        "8. Programm beenden"
+        "Neue Mannschaft anlegen",
+        "Spieler hinzufuegen",
+        "Spieler loeschen",
+        "Mannschaft loeschen",
+        "Suchen",
+        "Sortieren",
+        "Auflisten",
+        "Programm beenden"
     };
 
     int choice;
@@ -53,7 +53,23 @@ int main(int argc, char * argv[]) {
         case 2:
             printf("addPlayer\n");
             printLine('-', 30);
+            clearScreen();
+            char ** teamNames = calloc(TeamCounter, sizeof(char));
+            for(int i = 0; i < TeamCounter; i++){
+                    printf("%s\n", (Teams + i)->name);
+              teamNames[i] = (Teams + i)->name;
+            }
+            int teamNum = getMenu("Waelen Sie das Team, zudem Sie einen Spieler hinzufuegen moechten!", teamNames, TeamCounter);
+            do {
+                if(createPlayer(teamNum) == EXIT_SUCCESS) {
+                    Teams[teamNum].numberOfPlayers++;
+                }else{
+                    printf("\nSpielereingabe Fehlgeschlagen!\n");
+                    sleep(1);
+                }
+            }while(askYesOrNo("\n\nMoechten Sie einen weiteren Spieler eingeben? (j/n)") == EXIT_SUCCESS);
             break;
+
         case 3:
             printf("deletePlayer\n");
             printLine('-', 30);
@@ -82,7 +98,7 @@ int main(int argc, char * argv[]) {
             for(int i = 0; i < TeamCounter; i++) {
                 free(Teams[i].name);
                 if(Teams[i].coach != NULL) {
-                    free(Teams[i].name);
+                    free(Teams[i].coach);
                 }
                 for(int c = 0; c < Teams[i].numberOfPlayers; c++) {
                     free(Teams[i].player[c].name);

@@ -31,7 +31,7 @@ int createTeam() {
 
 
     do {
-        if(createPlayer() == EXIT_SUCCESS) {
+        if(createPlayer(TeamCounter) == EXIT_SUCCESS) {
             Teams[TeamCounter].numberOfPlayers++;
         }else{
             printf("\nSpielereingabe Fehlgeschlagen!\n");
@@ -47,18 +47,24 @@ int createTeam() {
 void deleteTeam() {
 }
 
-int createPlayer() {
+int createPlayer(int teamNum) {
 
     int scanErg;
-    printf("\nErfassung der Spieler\n");
+    printf("\nErfassung eines Spielers\n");
     printLine('=', 30);
-    int playerArrayNum = Teams[TeamCounter].numberOfPlayers;
+    if((Teams + teamNum)->numberOfPlayers >= MAXPLAYER){
+        printf("Team hat maximale Anzahl an Spielern!\n");
+        sleep(1);
+        return EXIT_FAILURE;
+    }
+    int playerArrayNum = (Teams + teamNum)->numberOfPlayers;
 
-    if((getText("Geben Sie den Namen des Spielers ein!\n-> ", MAXNAMELENGTH, 0, &((Teams + TeamCounter)->player[playerArrayNum].name))) == EXIT_FAILURE) {
+    if((getText("Geben Sie den Namen des Spielers ein!\n-> ", MAXNAMELENGTH, 0, &((Teams + teamNum)->player[playerArrayNum].name))) == EXIT_FAILURE) {
        return EXIT_FAILURE;
        }         //Playername
-
-    getDate("\nGeben Sie ggf. das Geburtsdatum des Spielers ein!\n", playerArrayNum);                                                 //Birthday
+    do{
+    if(getDate("\nGeben Sie ggf. das Geburtsdatum des Spielers ein!\n", playerArrayNum, teamNum) == EXIT_SUCCESS) break;                                                 //Birthday
+    }while(askYesOrNo("Erneut versuchen ein Geburtsdatum einzufügen? (j/n)") == EXIT_SUCCESS);
 
     int jerseyNr;
     printf("\nGeben Sie die Trikotnummer des Spielers ein!\n-> ");                                                                          //JerseyNum
@@ -73,7 +79,7 @@ int createPlayer() {
         printf("invalid input!\n");
         return EXIT_FAILURE;
     }else{
-        Teams[TeamCounter].player[playerArrayNum].nr = jerseyNr;
+        Teams[teamNum].player[playerArrayNum].nr = jerseyNr;
     }
     return EXIT_SUCCESS;
 
@@ -86,34 +92,35 @@ void deletePlayer() {
 void searchPlayer() {
 }
 
-void sortTeams(int choice) {
+void sortTeams() {
+    int sortChoice;
+
     char * sortmenu[] = {
-                "Spieler nach Namen sortieren"
-                "Spieler nach Geburtsdatum sortieren"
-                "Spieler nach Trikotnr. Sortieren"
-                "Spieler nach Anzahl geschossener Tore sortieren"
+                "Spieler nach Namen sortieren",
+                "Spieler nach Geburtsdatum sortieren",
+                "Spieler nach Trikotnr. Sortieren",
+                "Spieler nach Anzahl geschossener Tore sortieren",
                 "zurueck zum Hauptmenue"
             };
-    choice = getMenu("Sortieren", sortmenu, 5);
+    sortChoice = getMenu("Sortieren", sortmenu, 5);
 
-    for(int i = 0; i < TeamCounter; i++) {
-        switch(choice) {
+        switch(sortChoice) {
                 case 1:
-                    teamQSort(nameSort);
+                    sortTeam(nameSort);
                     break;
                 case 2:
-                    teamQSort(birthSort);
+                    sortTeam(birthSort);
                     break;
                 case 3:
-                    teamQSort(trikotSort);
+                    sortTeam(trikotSort);
                     break;
                 case 4:
-                    teamQSort(goalSort);
+                    sortTeam(goalSort);
                     break;
                 case 5:
                     break;
                 }
-    }
+
 }
 
 
@@ -153,6 +160,7 @@ void listOnePlayer(TPlayer * player) {
     if(player->birthday != NULL) {
         printf(", * ");
         printDate(player->birthday);
+        printf(", %d Tor(e) ", player->goals);
         printf(")\n");
     }else{
         printf(")\n");

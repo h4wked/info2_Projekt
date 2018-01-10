@@ -10,6 +10,6 @@ int isTimeValid (TTime * time);
 
 int getTimeFromString (char * string, TTime * time);
 
-void getDate(char * question, int num);
+int getDate(char * question, int numPlayer, int numTeam);
 
 void printDate(TDate * date);
