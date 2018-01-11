@@ -3,6 +3,24 @@
 
 int createTeam();
 
-int createPlayer();
+int deleteTeam();
+
+int createPlayer(TTeam * newTeam);
+
+void deletePlayer(); 
+
+void searchPlayer();
+
+void sortTeams();
+
+int listTeams();
+
+void listOneTeam(TTeam * team);
+    
+void listOnePlayer(TPlayer * player);
+
+void teamCleanup();
+
+void oneTeamCleanup(TTeam * team);
 
 #endif

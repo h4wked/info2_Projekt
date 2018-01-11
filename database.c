@@ -12,8 +12,12 @@ void save(const char * url){
 	}
 	fputs("<Daten>\n",file);
 
-	for( int i=0; i < TeamCounter;++i){
-		saveTeam(&Teams[i],file);
+	//for( int i=0; i < TeamCounter;++i){
+    TTeam * currentTeam = firstTeam;
+    saveTeam(currentTeam);
+    while(currentTeam->nextTeam != NULL)
+    {
+		saveTeam(currentTeam, file);
 	}
 	fputs("</Daten>\n",file);
 	fclose(file);
@@ -75,7 +79,6 @@ int startDaten(FILE * f){
 		puts("reading team!");
 		while(startTeam(f)){
 			puts("reading next team!");
-			TeamCounter++;
 		}
 		free(line);
 		return endDaten(f);
@@ -83,6 +86,7 @@ int startDaten(FILE * f){
 	free(line);
 	return 0;
 }
+
 int endDaten(FILE * f){
 	char *  line = (char*)calloc(128,sizeof(char));
 		if(!readLine(line,128,f)){
@@ -96,7 +100,7 @@ int endDaten(FILE * f){
 		free(line);
 		return 0;
 }
-int startTeam(FILE * f){
+int startTeam(TTeam * team, FILE * f){
 	char *  line = (char*)calloc(128,sizeof(char));
 
 	if(!readLine(line,128,f)){
@@ -104,10 +108,13 @@ int startTeam(FILE * f){
 		return 0;
 	}
 	if(!strnncmp(line,"<Team>")){
+        TTeam * newTeam = malloc(sizeof(TTeam));
 		puts("reading Team!");
-		(Teams + TeamCounter)->numberOfPlayers = 0;
-		(Teams + TeamCounter)->name == NULL;
-        (Teams + TeamCounter)->coach == NULL;
+		newTeam->numberOfPlayers = 0;
+		newTeam->name = NULL;
+        newTeam->coach = NULL;
+        newTeam->nextTeam = NULL;
+        newTeam->prevTeam = NULL;
 
 		char * buff = malloc(sizeof(char)*MAXNAMELENGTH);
 
@@ -121,7 +128,7 @@ int startTeam(FILE * f){
 
             if(!strnncmp(line,"</Team>")){
                 free(line);
-                if(((Teams + TeamCounter)->name) == NULL) {
+                if((newTeam->name) == NULL) {
                     printf("Team has no name !\n");
                     sleep(1);
                     return 0;
@@ -129,7 +136,7 @@ int startTeam(FILE * f){
                 return 1;
             }
 
-            if((Teams+TeamCounter)->numberOfPlayers == MAXPLAYER){
+            if(newTeam->numberOfPlayers == MAXPLAYER){
                 do{
                     readLine(line,128,f);
                 }while(strnncmp(line,"</Team>"));
@@ -142,21 +149,21 @@ int startTeam(FILE * f){
                 readTag(line,"Name",buff);
                 char * data = calloc(strlen(buff), sizeof(char));
                 strcpy(data, buff);
-                (Teams + TeamCounter)->name = data;
+                newTeam->name = data;
                 continue;
 
             }else if(!strnncmp(line,"<Trainer>")){
                 readTag(line,"Trainer",buff);
                 char * data = calloc(strlen(buff), sizeof(char));
                 strcpy(data, buff);
-                (Teams + TeamCounter)->coach = data;
+                newTeam->coach = data;
                 continue;
 
             }else if(!strnncmp(line,"<Player>")){
-                int currentPlayer = (Teams+TeamCounter)->numberOfPlayers;
-                TPlayer * player = (Teams + TeamCounter)  ->  player + currentPlayer;
+                int currentPlayer = newTeam->numberOfPlayers;
+                TPlayer * player = newTeam  ->  player + currentPlayer;
                 if(startPlayer(f, player)){
-                    (Teams+TeamCounter)->numberOfPlayers++;
+                    newTeam->numberOfPlayers++;
                 }
                 continue;
 
@@ -165,11 +172,14 @@ int startTeam(FILE * f){
             free(buff);
             free(line);
             printf("unexpected line! loading failed!\n");
+            oneTeamCleanup(newTeam);
+            free(newTeam);                                      //LADEN SCHLUG FEHL!TEAM WIRD GELÖSCHT
             sleep(1);
             return 0;
         }
 	}
 	free(line);
+    insertInDVList(newTeam);                                    //LADEN ERFOLGREICH! TEAM WIRD EINGEFÜGT
 	return 0;
 }
 

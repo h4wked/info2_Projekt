@@ -1,3 +1,6 @@
+#ifndef DATETIME_H
+#define DATETIME_H
+
 #include "datastructure.h"
 
 int isLeapYear (TDate * date);
@@ -10,6 +13,8 @@ int isTimeValid (TTime * time);
 
 int getTimeFromString (char * string, TTime * time);
 
-int getDate(char * question, int numPlayer, int numTeam);
+int getDate(char * question, int numPlayer, TTeam * team);
 
 void printDate(TDate * date);
+
+#endif

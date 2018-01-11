@@ -2,7 +2,9 @@
 #include <stdlib.h>
 
 #include "datetime.h"
+
 #include "datastructure.h"
+#include "tools.h"
 
 int isLeapYear (TDate * date) {
 
@@ -141,18 +143,18 @@ int getTimeFromString (char * string, TTime * time){
     return 0;
 }
 
-int getDate(char * question, int numPlayer, int numTeam) {
+int getDate(char * question, int numPlayer, TTeam * team) {
 
     int scanErg;
     printf("%s",question);
-    char * input[10];
+    char input[10];
     scanErg = scanf("%39[^\n]", input);
     if(scanErg == 0) {
-        Teams[numTeam].player[numPlayer].birthday = NULL;
+        team->player[numPlayer].birthday = NULL;
     }else{
         TDate * birthday = malloc(sizeof(TDate));
         if(getDateFromString(input, birthday) == EXIT_SUCCESS) {
-            Teams[numTeam].player[numPlayer].birthday = birthday;
+            team->player[numPlayer].birthday = birthday;
             return EXIT_SUCCESS;
         }else{
             clearBuffer();

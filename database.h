@@ -24,7 +24,7 @@ int load(const char * url); // lade Datei url
 // ihr müsst hier noch irgendwas basteln, damit ihr das laden könnt, was das Programm ließt ;)
 int startDaten(FILE * f); // Hilfsfunktion zum Parsen, Regel für <Daten>, ruft endDaten(...) auf
 int endDaten(FILE * f); // </Daten>
-int startTeam(FILE * f); // <Team>
+int startTeam(TTeam * team, FILE * f); // <Team>
 int endTeam(FILE * f); // </Team>
 
 // ließt Inhalt zwischen zwei Tags

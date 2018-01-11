@@ -95,20 +95,8 @@ int main(int argc, char * argv[]) {
         case 8:
             printf("Programm wird beendet!\n");
             save(SAVEFILE);
-            for(int i = 0; i < TeamCounter; i++) {
-                free(Teams[i].name);
-                if(Teams[i].coach != NULL) {
-                    free(Teams[i].coach);
-                }
-                for(int c = 0; c < Teams[i].numberOfPlayers; c++) {
-                    free(Teams[i].player[c].name);
-                    if(Teams[i].player[c].birthday != NULL) {
-                        free(Teams[i].player[c].birthday);
-                    }
-                }
-            }
+            teamCleanup();
             break;
-
         }
         waitForEnter();
 

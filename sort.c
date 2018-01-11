@@ -7,11 +7,18 @@
 
 int sortTeam(int (* compar)(TPlayer *, TPlayer *)) {
 
+    TTeam * currentTeam = firstTeam;
 
-    for(int c = 0; c < TeamCounter; c++) {
+    printf("Sortieren von %s .. ", currentTeam->name);
+    int lastPlayer = currentTeam->numberOfPlayers - 1;
+    quicksort( compar, &(currentTeam->player[0]) , &(currentTeam->player[lastPlayer]) );
+    printf("erfolgreich!\n");
+    while(currentTeam->nextTeam != NULL)
+    {
+        currentTeam = currentTeam->nextTeam;
         printf("Sortieren von %s .. ", Teams[c].name);
-        int lastPlayer = Teams[c].numberOfPlayers - 1;
-        quicksort( compar, &Teams[c].player[0] , &(Teams[c].player[lastPlayer]) );
+        lastPlayer = Teams[c].numberOfPlayers - 1;
+        quicksort( compar, &(currentTeam->player[0]) , &(currentTeam.player[lastPlayer]) );
         printf("erfolgreich!\n");
     }
     printf("\nSortieren erfolgreich!\n");
