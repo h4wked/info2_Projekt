@@ -44,6 +44,4 @@ typedef struct TTeam
 
 extern TTeam *firstTeam;
 extern TTeam *lastTeam;
-extern int TeamCounter;
-
 #endif

@@ -155,7 +155,7 @@ int goalSort(TPlayer * a, TPlayer * b) {
     }else if(a->goals > b->goals) {
         return -1;
     }else{
-        return 0;
+        return nameSort(a, b);
     }
 
 }

@@ -32,8 +32,34 @@ int insertInDVList(TTeam * newTeam)
     else                //several Teams
     {
         TTeam * currentTeam = firstTeam;
-        while(compareTeamNames(currentTeam, newTeam) > 0)  //suche namensposition innerhalb der liste
+        if(compareTeamNames(currentTeam, newTeam) > 0)  //suche namensposition innerhalb der liste
+            {
+            firstTeam->prevTeam = newTeam;
+            newTeam->nextTeam = firstTeam;
+            firstTeam = newTeam;
+            return EXIT_SUCCESS;
+            }
+            else
+            {
+                while(currentTeam != lastTeam)
                 {
+                    currentTeam = currentTeam->nextTeam;
+                    if(compareTeamNames(currentTeam, newTeam) > 0)
+                    {
+                        TTeam * prevTeam = currentTeam->prevTeam;
+                        currentTeam->prevTeam = newTeam;
+                        prevTeam->nextTeam = newTeam;
+                        newTeam->nextTeam = currentTeam;
+                        newTeam->prevTeam = prevTeam;
+                        return EXIT_SUCCESS;
+                    }
+                }
+                lastTeam->nextTeam = newTeam;
+                newTeam->prevTeam = lastTeam;
+                lastTeam = newTeam;
+                return EXIT_SUCCESS;
+            }
+            /*
                     if(currentTeam == lastTeam) //letztes team erreicht, neues Team noch immer "groesser"
                     {
                         lastTeam->nextTeam = newTeam;
@@ -45,10 +71,7 @@ int insertInDVList(TTeam * newTeam)
                 }
         if(currentTeam == firstTeam) //namenssuche beendet einfügen beginnt, prüfung ob neues team > first team
         {
-            firstTeam->prevTeam = newTeam;
-            newTeam->nextTeam = firstTeam;
-            firstTeam = newTeam;
-            return EXIT_SUCCESS;
+
         }
         else    //füge neues team in liste ein
         {
@@ -57,7 +80,7 @@ int insertInDVList(TTeam * newTeam)
             currentTeam->prevTeam = newTeam;
             newTeam->prevTeam = prevTeam;                   //lasse neues Team auf teams vor und hinter ihm zeigen
             newTeam->nextTeam = currentTeam;
-        }
+        }*/
     }
 }
 
@@ -74,10 +97,12 @@ void removeFromDVList(TTeam * team)
     else if(team == firstTeam)                      //entfernen von firstTeam
     {
         firstTeam = team->nextTeam;
+        nextTeam->prevTeam = NULL;
     }
     else if(team == lastTeam)                       //entfernen von lastTeam
     {
         lastTeam = team->prevTeam;
+        prevTeam->nextTeam = NULL;
     }
     else
     {

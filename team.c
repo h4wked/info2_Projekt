@@ -62,6 +62,12 @@ int deleteTeam() {
     clearScreen();
     printf("Liste der Mannschaften\n");
     printLine('=', 24);
+    if(firstTeam == NULL)
+    {
+        printf("Keine Teams vorhanden!\n");
+        waitForEnter();
+        return EXIT_SUCCESS;
+    }
     printf("%d: %s\n", counter+1, currentTeam->name);
     do
     {
@@ -76,10 +82,12 @@ int deleteTeam() {
     {
         printf("\nFehlerhafte Eingabe, kehre zum Hauptmenu zurück");
         return EXIT_FAILURE;
-    }else if(counter == 0)
+    }
+    else if(counter == 0)
     {
         return EXIT_SUCCESS;
-    }else
+    }
+    else
     {
         currentTeam = firstTeam;
         for(int c = 1; c < counter; c++)
@@ -126,6 +134,8 @@ int createPlayer(TTeam * newTeam) {
     }else{
         newTeam->player[playerArrayNum].nr = jerseyNr;
     }
+    newTeam->player[playerArrayNum].goals = 0;  //Tore Null setzten
+
     return EXIT_SUCCESS;
 
 

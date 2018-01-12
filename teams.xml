@@ -21,7 +21,7 @@
    <Goals>0</Goals>
   </Player>
   <Player>
-   <Goals>0</Goals>
+   <Goals>1</Goals>
    <TricotNr>27</TricotNr>
    <Birthday>24.06.1992</Birthday>
    <Name>David Alaba</Name>
@@ -42,7 +42,7 @@
    <Name>Mats Hummels</Name>
    <Birthday>16.12.1988</Birthday>
    <TricotNr>5</TricotNr>
-   <Goals>0</Goals>
+   <Goals>1</Goals>
   </Player>
   <Player>
    <Name>Javi Martinez</Name>
@@ -60,7 +60,7 @@
    <Name>Joshua Kimmich</Name>
    <Birthday>08.02.1995</Birthday>
    <TricotNr>32</TricotNr>
-   <Goals>0</Goals>
+   <Goals>1</Goals>
   </Player>
   <Player>
    <Name>Rafinha</Name>
@@ -72,7 +72,7 @@
    <Name>Niklas Suele</Name>
    <Birthday>03.09.1995</Birthday>
    <TricotNr>4</TricotNr>
-   <Goals>0</Goals>
+   <Goals>1</Goals>
   </Player>
   <Player>
    <Name>Fabian Benko</Name>
@@ -84,7 +84,7 @@
    <Name>Kingsley Coman</Name>
    <Birthday>13.06.1996</Birthday>
    <TricotNr>29</TricotNr>
-   <Goals>0</Goals>
+   <Goals>1</Goals>
   </Player>
   <Player>
    <Name>Niklas Dorsch</Name>
@@ -96,7 +96,7 @@
    <Name>Thomas Mueller</Name>
    <Birthday>13.09.1989</Birthday>
    <TricotNr>25</TricotNr>
-   <Goals>0</Goals>
+   <Goals>1</Goals>
   </Player>
   <Player>
    <Name>Franck Ribery</Name>
@@ -108,7 +108,7 @@
    <Name>Arjen Robben</Name>
    <Birthday>23.01.1984</Birthday>
    <TricotNr>10</TricotNr>
-   <Goals>0</Goals>
+   <Goals>3</Goals>
   </Player>
   <Player>
    <Name>Sebastian Rudy</Name>
@@ -120,25 +120,25 @@
    <Name>Thiago</Name>
    <Birthday>11.04.1991</Birthday>
    <TricotNr>6</TricotNr>
-   <Goals>0</Goals>
+   <Goals>1</Goals>
   </Player>
   <Player>
    <Name>Corentin Tolisso</Name>
    <Birthday>03.08.1994</Birthday>
    <TricotNr>24</TricotNr>
-   <Goals>0</Goals>
+   <Goals>2</Goals>
   </Player>
   <Player>
    <Name>Arturo Vidal</Name>
    <Birthday>22.05.1987</Birthday>
    <TricotNr>23</TricotNr>
-   <Goals>0</Goals>
+   <Goals>1</Goals>
   </Player>
   <Player>
    <Name>Robert Lewandowski</Name>
    <Birthday>21.08.1988</Birthday>
    <TricotNr>9</TricotNr>
-   <Goals>0</Goals>
+   <Goals>11</Goals>
   </Player>
   <Player>
    <Name>Max Mustermann</Name>
@@ -176,10 +176,10 @@
    <Name>Lukas Klostermann</Name>
    <Birthday>03.06.1996</Birthday>
    <TricotNr>16</TricotNr>
-   <Goals>0</Goals>
+   <Goals>1</Goals>
   </Player>
   <Player>
-   <Name>Ibrahima Konate</Name>
+   <Name>Ibrahima Konat</Name>
    <Birthday>25.05.1999</Birthday>
    <TricotNr>6</TricotNr>
    <Goals>0</Goals>
@@ -188,7 +188,7 @@
    <Name>Willi Orban</Name>
    <Birthday>03.11.1992</Birthday>
    <TricotNr>4</TricotNr>
-   <Goals>0</Goals>
+   <Goals>1</Goals>
   </Player>
   <Player>
    <Name>Benno Schmitz</Name>
@@ -206,7 +206,7 @@
    <Name>Bruma</Name>
    <Birthday>24.10.1994</Birthday>
    <TricotNr>17</TricotNr>
-   <Goals>0</Goals>
+   <Goals>1</Goals>
   </Player>
   <Player>
    <Name>Diego Demme</Name>
@@ -242,7 +242,7 @@
    <Name>Naby Keita</Name>
    <Birthday>10.02.1995</Birthday>
    <TricotNr>8</TricotNr>
-   <Goals>0</Goals>
+   <Goals>1</Goals>
   </Player>
   <Player>
    <Name>Nicolas-Gerrit Kuehn</Name>
@@ -254,26 +254,156 @@
    <Name>Marcel Sabitzer</Name>
    <Birthday>17.03.1994</Birthday>
    <TricotNr>7</TricotNr>
-   <Goals>0</Goals>
+   <Goals>2</Goals>
   </Player>
   <Player>
    <Name>Jean-Kevin Augustin</Name>
    <Birthday>16.06.1997</Birthday>
    <TricotNr>29</TricotNr>
-   <Goals>0</Goals>
+   <Goals>3</Goals>
   </Player>
   <Player>
    <Name>Yussuf Poulsen</Name>
    <Birthday>15.06.1994</Birthday>
    <TricotNr>9</TricotNr>
-   <Goals>0</Goals>
+   <Goals>3</Goals>
   </Player>
   <Player>
    <Name>Timo Werner</Name>
    <Birthday>06.03.1996</Birthday>
    <TricotNr>11</TricotNr>
-   <Goals>0</Goals>
+   <Goals>6</Goals>
   </Player>
   <Name>RB Leipzig</Name>
+ </Team>
+ <Team>
+  <Player>
+   <Name>Jarstein, Rune</Name>
+   <Birthday>29.09.1984</Birthday>
+   <TricotNr>22</TricotNr>
+   <Goals>0</Goals>
+  </Player>
+  <Trainer>Pal Dardai</Trainer>
+  <Name>Hertha BSC</Name>
+  <Player>
+   <Name>Langkamp, Sebastian</Name>
+   <Birthday>15.01.1988</Birthday>
+   <TricotNr>15</TricotNr>
+   <Goals>0</Goals>
+  </Player>
+  <Player>
+   <Name>Pekarik, Peter</Name>
+   <Birthday>30.10.1986</Birthday>
+   <TricotNr>2</TricotNr>
+   <Goals>0</Goals>
+  </Player>
+  <Player>
+   <Name>Plattenhardt, Marvin</Name>
+   <Birthday>26.01.1992</Birthday>
+   <TricotNr>21</TricotNr>
+   <Goals>0</Goals>
+  </Player>
+  <Player>
+   <Name>Rekik, Karim</Name>
+   <Birthday>02.12.1994</Birthday>
+   <TricotNr>4</TricotNr>
+   <Goals>2</Goals>
+  </Player>
+  <Player>
+   <Name>Stark, Niklas</Name>
+   <Birthday>14.04.1995</Birthday>
+   <TricotNr>5</TricotNr>
+   <Goals>1</Goals>
+  </Player>
+  <Player>
+   <Name>Torunarigha, Jordan</Name>
+   <Birthday>07.08.1997</Birthday>
+   <TricotNr>25</TricotNr>
+   <Goals>0</Goals>
+  </Player>
+  <Player>
+   <Name>Darida, Vladimir</Name>
+   <Birthday>08.08.1990</Birthday>
+   <TricotNr>6</TricotNr>
+   <Goals>0</Goals>
+  </Player>
+  <Player>
+   <Name>Duda, Ondrej</Name>
+   <Birthday>05.12.1994</Birthday>
+   <TricotNr>10</TricotNr>
+   <Goals>1</Goals>
+  </Player>
+  <Player>
+   <Name>Esswein, Alexander</Name>
+   <Birthday>25.03.1990</Birthday>
+   <TricotNr>7</TricotNr>
+   <Goals>1</Goals>
+  </Player>
+  <Player>
+   <Name>Haraguchi, Genki</Name>
+   <Birthday>09.05.1991</Birthday>
+   <TricotNr>24</TricotNr>
+   <Goals>0</Goals>
+  </Player>
+  <Player>
+   <Name>Lazaro, Valentino</Name>
+   <Birthday>24.03.1996</Birthday>
+   <TricotNr>20</TricotNr>
+   <Goals>0</Goals>
+  </Player>
+  <Player>
+   <Name>Leckie, Mathew</Name>
+   <Birthday>04.02.1991</Birthday>
+   <TricotNr>11</TricotNr>
+   <Goals>4</Goals>
+  </Player>
+  <Player>
+   <Name>Lustenberger, Fabian</Name>
+   <Birthday>02.05.1988</Birthday>
+   <TricotNr>28</TricotNr>
+   <Goals>0</Goals>
+  </Player>
+  <Player>
+   <Name>Maier, Arne</Name>
+   <Birthday>08.01.1999</Birthday>
+   <TricotNr>26</TricotNr>
+   <Goals>0</Goals>
+  </Player>
+  <Player>
+   <Name>Skjelbred, Per Ciljan</Name>
+   <Birthday>16.06.1987</Birthday>
+   <TricotNr>3</TricotNr>
+   <Goals>0</Goals>
+  </Player>
+  <Player>
+   <Name>Stocker, Valentin</Name>
+   <Birthday>12.04.1989</Birthday>
+   <TricotNr>14</TricotNr>
+   <Goals>0</Goals>
+  </Player>
+  <Player>
+   <Name>Weiser, Mitchell</Name>
+   <Birthday>21.04.1994</Birthday>
+   <TricotNr>23</TricotNr>
+   <Goals>0</Goals>
+  </Player>
+  <Player>
+   <Name>Ibisevic, Vedad</Name>
+   <Birthday>06.08.1984</Birthday>
+   <TricotNr>19</TricotNr>
+   <Goals>1</Goals>
+  </Player>
+  <Player>
+   <Name>Kalou, Salomon</Name>
+   <Birthday>05.08.1985</Birthday>
+   <TricotNr>8</TricotNr>
+   <Goals>3</Goals>
+  </Player>
+  <Player>
+   <Name>Selke, Davie</Name>
+   <Birthday>20.01.1995</Birthday>
+   <TricotNr>27</TricotNr>
+   <Goals>1</Goals>
+  </Player>
  </Team>
 </Daten>

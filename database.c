@@ -7,16 +7,16 @@ void save(const char * url){
 	FILE * file;
 	if(!(file = fopen(url,"w"))){
 		 	puts("Fehler beim schreiben der Datei: ");
-		 	puts(url);
-		 	return; // false
+		 	puts(url); // false
 	}
+	TTeam * currentTeam = firstTeam;
 	fputs("<Daten>\n",file);
 
 	//for( int i=0; i < TeamCounter;++i){
-    TTeam * currentTeam = firstTeam;
     saveTeam(currentTeam, file);
     while(currentTeam->nextTeam != NULL)
     {
+        currentTeam = currentTeam->nextTeam;
 		saveTeam(currentTeam, file);
 	}
 	fputs("</Daten>\n",file);
@@ -64,7 +64,7 @@ int load(const char * url){
 		 puts("Fehler beim Lesen!");
 	 }
 
-	 pclose(file);
+	 fclose(file);
 
 	 return 1; // true/success
 }
@@ -127,13 +127,13 @@ int startTeam(FILE * f){
             }
 
             if(!strnncmp(line,"</Team>")){
-                free(line);
                 if((newTeam->name) == NULL) {
                     printf("Team has no name !\n");
                     sleep(1);
                     return 0;
                 }
                 insertInDVList(newTeam);                //LADEN ERFOLGREICH! TEAM WIRD EINGEFÜGT
+                free(line);
                 return 1;
             }
 
@@ -141,7 +141,7 @@ int startTeam(FILE * f){
                 do{
                     readLine(line,128,f);
                 }while(strnncmp(line,"</Team>"));
-                free(line);
+                insertInDVList(newTeam);
                 return 1;
             }
 
