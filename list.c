@@ -1,3 +1,9 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#include "list.h"
+
 int insertInDVList(TTeam * newTeam)
 {
     //empty list
@@ -55,7 +61,7 @@ int insertInDVList(TTeam * newTeam)
     }
 }
 
-void removeFromDVList(TTeam * team) 
+void removeFromDVList(TTeam * team)
 {
     TTeam * nextTeam = team->nextTeam;
     TTeam * prevTeam = team->prevTeam;

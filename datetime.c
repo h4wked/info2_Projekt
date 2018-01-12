@@ -151,6 +151,7 @@ int getDate(char * question, int numPlayer, TTeam * team) {
     scanErg = scanf("%39[^\n]", input);
     if(scanErg == 0) {
         team->player[numPlayer].birthday = NULL;
+        return EXIT_SUCCESS;
     }else{
         TDate * birthday = malloc(sizeof(TDate));
         if(getDateFromString(input, birthday) == EXIT_SUCCESS) {

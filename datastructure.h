@@ -29,18 +29,21 @@ typedef struct {
     int goals;
 }TPlayer;
 
-typedef struct {
+typedef struct TTeam TTeam;
+
+typedef struct TTeam
+{
     char * name;
     char * coach;
     int numberOfPlayers;
     TPlayer player[MAXPLAYER];
-    TTeam * next;
-    TTeam * prev;
+    TTeam * nextTeam;
+    TTeam * prevTeam;
 
-}TTeam;
+};
 
-extern TTeam *FirstTeam;
-extern TTeam *LastTeam;
+extern TTeam *firstTeam;
+extern TTeam *lastTeam;
 extern int TeamCounter;
 
 #endif

@@ -9,6 +9,7 @@
 #include "sort.h"
 #include "tools.h"
 #include "datetime.h"
+#include "menu.h"
 
 /* TeamCounter und Teams[n].numberOfPlayers entprechen der physischen Anzahl an Spielern!! */
 
@@ -23,14 +24,14 @@ int createTeam() {
     newTeam->nextTeam = NULL;
     newTeam->prevTeam = NULL;
 
-    if(getText("\nGeben Sie den Namen der Mannschaft ein!\n-> ", MAXNAMELENGTH, 0, &(newTeam->name)) == EXIT_SUCCESS) 
+    if(getText("\nGeben Sie den Namen der Mannschaft ein!\n-> ", MAXNAMELENGTH, 0, &(newTeam->name)) == EXIT_SUCCESS)
     {
     }else{
         memset(newTeam, 0, sizeof(TTeam));
         return EXIT_FAILURE;
     }
 
-    if(getText("Geben Sie den Namen des Trainers ein!\n-> ", MAXNAMELENGTH, 1, (newTeam->coach)) == EXIT_SUCCESS) {
+    if(getText("Geben Sie den Namen des Trainers ein!\n-> ", MAXNAMELENGTH, 1, &(newTeam->coach)) == EXIT_SUCCESS) {
     }else{
         oneTeamCleanup(newTeam);
         memset(newTeam, 0, sizeof(TTeam));
@@ -48,7 +49,7 @@ int createTeam() {
 
     }while(askYesOrNo("\n\nMoechten Sie einen weiteren Spieler eingeben? (j/n)") == EXIT_SUCCESS);
 
-    inserInDVList(newTeam);
+    insertInDVList(newTeam);
     return EXIT_SUCCESS;
 
 }
@@ -56,18 +57,21 @@ int createTeam() {
 int deleteTeam() {
 
     TTeam * currentTeam = firstTeam;
-    int counter;
+    int counter = 0;
 
+    clearScreen();
+    printf("Liste der Mannschaften\n");
+    printLine('=', 24);
     printf("%d: %s\n", counter+1, currentTeam->name);
     do
     {
         currentTeam = currentTeam->nextTeam;
         counter++;
         printf("%d: %s\n", counter+1, currentTeam->name);
-    }while(currentTeam-nextTeam != NULL);
+    }while(currentTeam->nextTeam != NULL);
 
-    printf("Welche Manschaft moechten Sie loeschen? (0 fuer abbruch) ");
-    int erg = scanf("%d", counter);
+    printf("\nWelche Manschaft moechten Sie loeschen? (0 fuer abbruch) ");
+    int erg = scanf("%d", &counter);
     if(erg < 1)
     {
         printf("\nFehlerhafte Eingabe, kehre zum Hauptmenu zurück");
@@ -100,7 +104,7 @@ int createPlayer(TTeam * newTeam) {
     }
     int playerArrayNum = newTeam->numberOfPlayers;
 
-    if((getText("Geben Sie den Namen des Spielers ein!\n-> ", MAXNAMELENGTH, 0, newTeam->player[playerArrayNum].name))) == EXIT_FAILURE) {
+    if((getText("Geben Sie den Namen des Spielers ein!\n-> ", MAXNAMELENGTH, 0, &(newTeam->player[playerArrayNum].name))) == EXIT_FAILURE) {
        return EXIT_FAILURE;
        }         //Playername
     do{
@@ -167,22 +171,22 @@ void sortTeams() {
 
 int listTeams() {
     clearScreen();
-    if(TeamCounter == 0) {
+    if(firstTeam == NULL) {
         printf("Keine Mannschaften vorhanden!\n");
         return EXIT_SUCCESS;
     }
 
-    char * menu[] = 
+    char * menu[] =
     {
         "Aufwarts ausgeben",
         "Abwaerts ausgeben",
         "zurueck zum Hauptmenue"
     };
-    int choice = getmenu("Auswahl der Ausgabemethode", menu, 3);
+    int choice = getMenu("Auswahl der Ausgabemethode", menu, 3);
 
-    if (choice == 3) 
+    if (choice == 3)
     {
-       return EXIT_SUCCESS; 
+       return EXIT_SUCCESS;
     }
     else if(choice == 1)
     {
@@ -214,7 +218,7 @@ int listTeams() {
 void listOneTeam(TTeam * team) {
     printf("\nName:           : %s\n",team->name);
 
-    if(Teams[currentTeam].coach != NULL) {
+    if(team->coach != NULL) {
         printf("Trainer         : %s\n",team->coach);
     }
 
@@ -241,10 +245,10 @@ void listOnePlayer(TPlayer * player) {
     }
 }
 
-void teamCleanup() 
+void teamCleanup()
 {
     TTeam * currentTeam = firstTeam;
-    
+
     oneTeamCleanup(currentTeam);
     while(currentTeam->nextTeam != NULL)
     {
@@ -253,11 +257,11 @@ void teamCleanup()
     }
 }
 
-void oneTeamCleanup(TTeam * team) 
+void oneTeamCleanup(TTeam * team)
 {
     free(team->name);
     if(team->coach != NULL) {
-        free(Teams[i].coach);
+        free(team->coach);
     }
     for(int c = 0; c < team->numberOfPlayers; c++) {
         free(team->player[c].name);

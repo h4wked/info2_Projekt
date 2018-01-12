@@ -1,5 +1,5 @@
 #include "database.h"
-
+#include "list.h"
 
 
 
@@ -14,7 +14,7 @@ void save(const char * url){
 
 	//for( int i=0; i < TeamCounter;++i){
     TTeam * currentTeam = firstTeam;
-    saveTeam(currentTeam);
+    saveTeam(currentTeam, file);
     while(currentTeam->nextTeam != NULL)
     {
 		saveTeam(currentTeam, file);
@@ -100,15 +100,15 @@ int endDaten(FILE * f){
 		free(line);
 		return 0;
 }
-int startTeam(TTeam * team, FILE * f){
+int startTeam(FILE * f){
 	char *  line = (char*)calloc(128,sizeof(char));
+    TTeam * newTeam = malloc(sizeof(TTeam));
 
 	if(!readLine(line,128,f)){
 		free(line);
 		return 0;
 	}
 	if(!strnncmp(line,"<Team>")){
-        TTeam * newTeam = malloc(sizeof(TTeam));
 		puts("reading Team!");
 		newTeam->numberOfPlayers = 0;
 		newTeam->name = NULL;
@@ -133,6 +133,7 @@ int startTeam(TTeam * team, FILE * f){
                     sleep(1);
                     return 0;
                 }
+                insertInDVList(newTeam);                //LADEN ERFOLGREICH! TEAM WIRD EINGEFÜGT
                 return 1;
             }
 
@@ -179,7 +180,6 @@ int startTeam(TTeam * team, FILE * f){
         }
 	}
 	free(line);
-    insertInDVList(newTeam);                                    //LADEN ERFOLGREICH! TEAM WIRD EINGEFÜGT
 	return 0;
 }
 

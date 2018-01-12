@@ -16,9 +16,9 @@ int sortTeam(int (* compar)(TPlayer *, TPlayer *)) {
     while(currentTeam->nextTeam != NULL)
     {
         currentTeam = currentTeam->nextTeam;
-        printf("Sortieren von %s .. ", Teams[c].name);
-        lastPlayer = Teams[c].numberOfPlayers - 1;
-        quicksort( compar, &(currentTeam->player[0]) , &(currentTeam.player[lastPlayer]) );
+        printf("Sortieren von %s .. ", currentTeam->name);
+        lastPlayer = currentTeam->numberOfPlayers - 1;
+        quicksort( compar, &(currentTeam->player[0]) , &(currentTeam->player[lastPlayer]) );
         printf("erfolgreich!\n");
     }
     printf("\nSortieren erfolgreich!\n");
