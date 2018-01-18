@@ -165,6 +165,8 @@ int startTeam(FILE * f){
                 TPlayer * player = newTeam  ->  player + currentPlayer;
                 if(startPlayer(f, player)){
                     newTeam->numberOfPlayers++;
+                    int hash = calcDivisionrest(player->name);
+                    appendInEVList(&PlayerIndex[hash], newTeam, player);
                 }
                 continue;
 
@@ -311,3 +313,4 @@ int readLine(char * buffer,int len, FILE * f){
 	free(buf);
 	return 0;
 }
+

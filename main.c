@@ -5,6 +5,8 @@
 #include "tools.h"
 #include "team.h"
 #include "list.h"
+#include "search.h"
+#include "sort.h"
 
 #include "menu.h"
 
@@ -53,43 +55,8 @@ int main(int argc, char * argv[]) {
             break;
         case 2:
             clearScreen();
-            printf("Liste der Mannschaften\n");
-            printLine('=', 24);
-
-            TTeam * currentTeam = firstTeam;
-            int i = 1;
-            while(currentTeam->nextTeam != NULL)            //Anzeigen aller Teams
-            {
-                printf("%d: %s\n", i, currentTeam->name);
-                currentTeam = currentTeam->nextTeam;
-                i++;
-            }
-            printf("%d: %s\n", i, currentTeam->name);
-
-            int chosenTeam;
-            while(1)
-            {
-                printf("\nWaehlen Sie ein Mannschaft (0 Abbruch) ", i, currentTeam->name);       //Auswählen des Teams
-                int erg = scanf("%d", &chosenTeam);
-                if(erg < 1 || chosenTeam < 0 || chosenTeam > i)            //ungültige Eingaben abfangen
-                {
-                    printf("Fehlerhafte Eingabe!\n");
-                    continue;
-                }
-                else if(chosenTeam == 0)                                    //Abbruch
-                {
-                    break;
-                }
-                else
-                {
-                    currentTeam = firstTeam;                //springe zum ausgewählten Team
-                    for(int c = 0; c < (chosenTeam-1); c++) currentTeam = currentTeam->nextTeam;
-                    break;
-                }
-            }
-            if(chosenTeam == 0) break;
-            clearBuffer();
-
+            TTeam * currentTeam = choseTeam();
+            if (currentTeam == NULL) break;
             do {
                 if(createPlayer(currentTeam) == EXIT_SUCCESS) {
                     currentTeam->numberOfPlayers++;
@@ -103,15 +70,52 @@ int main(int argc, char * argv[]) {
         case 3:
             printf("deletePlayer\n");
             printLine('-', 30);
+            do
+            {
+                clearScreen();
+                TTeam * chosenTeam = choseTeam();
+                if(chosenTeam == NULL) break;
+                deletePlayer(chosenTeam);
+            }
+            while(askYesOrNo("Moechten Sie einen weiteren Spieler loeschen? (j/n)") == EXIT_SUCCESS);
             break;
         case 4:
             printf("deleteTeam\n");
             printLine('-', 30);
-            deleteTeam();
+            while(deleteTeam() != EXIT_SUCCESS) {
+                clearScreen();
+                char sentence[] = "Sind Sie sicher das Sie das Team loeschen moechten? (j/n)";
+                if(askYesOrNo(sentence) == EXIT_SUCCESS)
+                {
+                    clearScreen();
+                    continue;
+                }
+                else
+                {
+                    break;
+                }
+                free(sentence);
+                oneTeamCleanup(currentTeam);
+            }
             break;
         case 5:
-            printf("searchPlayer\n");
+            printf("Spielersuche\n");
             printLine('-', 30);
+            printf("Geben Sie den Namen des Spielers ein den Sie suchen:\n-> ");
+            TPlayer player;
+            player.name = calloc(MAXNAMELENGTH, sizeof(char));
+            scanf("%39[^\n]", player.name);
+            TListElement * searchResult = search(PlayerIndex, nameSort, &player);
+            if(searchResult == NULL)
+            {
+                printf("\n\nSpieler mit dem gesuchten Namen nicht gefunden.\n");
+            }
+            else
+            {
+                printf("\nin der Mannschaft %s:\n\t", searchResult->Team->name);
+                listOnePlayer(searchResult->Player);
+            }
+            clearBuffer();
             break;
         case 6:
             printf("sortTeams\n");

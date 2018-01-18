@@ -120,5 +120,91 @@ int compareTeamNames(TTeam * a, TTeam * b)
     return strcmp(a->name, b->name);
 }
 
+int appendInEVList(THashTableElement * tableElement, TTeam * team, TPlayer * player)
+{
+    //List Element erstellen
+    TListElement * listElement = malloc(sizeof(TListElement));
+    listElement->Player = player;
+    listElement->Team = team;
+    //List ELement einhängen
+    if(tableElement->first == NULL)
+    {       //wenn erstes
+        listElement->next = NULL;
+        tableElement->first = listElement;
+        tableElement->last = listElement;
+        return EXIT_SUCCESS;
+    }
+    else
+    {       //wenn zusätzliches
+        tableElement->last->next = listElement;
+        tableElement->last = listElement;
+        return EXIT_SUCCESS;
+    }
+    return EXIT_FAILURE;
+}
+
+int removeFromEVList(THashTableElement * tableElement, TPlayer * player)
+{
+    if(tableElement->first == NULL)
+    {
+        perror("error in removeFromEVList");
+        return EXIT_FAILURE;
+    }
+    if(tableElement->first == tableElement->last)
+    {       //Behandlung wenn nur ein tableELement in PlayerIndex
+        if(player == tableElement->first->Player)
+        {
+            free(tableElement->first);
+            tableElement->first = NULL;
+            tableElement->last = NULL;
+            return EXIT_SUCCESS;
+        }
+        perror("error in removeFromEVList");
+        return EXIT_FAILURE;
+    }
+    else
+    {   //Behandlung wenn mehrere Elemente in PlayerIndex
+        TListElement * currentElement = tableElement->first;
+        while(currentElement->Player != player)
+        {   //springen zum zu löschenden Element
+            if(currentElement->next == NULL)
+            {   //Player in liste nicht gefunden
+                perror("error in removeFromEVList");
+                return EXIT_FAILURE;
+            }
+            currentElement = currentElement->next;
+        }
+
+        if(currentElement == tableElement->first)
+        {   //zu löschendes ELement erstes in der liste
+            tableElement->first = tableElement->first->next;
+            free(currentElement);
+            return EXIT_SUCCESS;
+        }
+        else if(currentElement == tableElement->last)
+        {   //zu löschendes Element letztes in der Liste
+            TListElement * prevElement = tableElement->first;
+            while(prevElement->next != currentElement)
+            {   //finde element vor dem letzten
+                prevElement = prevElement->next;
+            }
+            prevElement->next = NULL;
+            tableElement->last = prevElement;
+            free(currentElement);
+            return EXIT_SUCCESS;
+        }
+        else
+        {   //zu löschendes Element in mitten der Liste
+            TListElement * prevElement = tableElement->first;
+            while(prevElement->next != currentElement)
+            {   //finde element vor dem letzten
+                prevElement = prevElement->next;
+            }
+            prevElement->next = currentElement->next;
+            free(currentElement);
+            return EXIT_SUCCESS;
+        }
+    }
+}
 
 

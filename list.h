@@ -9,4 +9,8 @@ void removeFromDVList(TTeam * team);
 
 int compareTeamNames(TTeam * a, TTeam * b);
 
+int appendInEVList(THashTableElement * tableElement, TTeam * team, TPlayer * player);
+
+int removeFromEVList(THashTableElement * tableElement, TPlayer * player);
+
 #endif // LIST_H

@@ -10,6 +10,9 @@
 #include "tools.h"
 #include "datetime.h"
 #include "menu.h"
+#include "search.h"
+
+THashTableElement PlayerIndex[MAXINDEX];
 
 /* TeamCounter und Teams[n].numberOfPlayers entprechen der physischen Anzahl an Spielern!! */
 
@@ -136,12 +139,47 @@ int createPlayer(TTeam * newTeam) {
     }
     newTeam->player[playerArrayNum].goals = 0;  //Tore Null setzten
 
+    //Anlegen des Hash-Eintrages
+    int hash = calcDivisionrest(newTeam->player->name);
+    appendInEVList(PlayerIndex[hash], newTeam, newTeam->player[playerArrayNum]);
+
     return EXIT_SUCCESS;
 
 
 }
 
-void deletePlayer() {
+void deletePlayer(TTeam * team)
+{
+    clearScreen();
+    printf("Waehlen Sie den Spieler aus der gelöscht werden soll.\n\n");
+    for(int c = 0; c < team->numberOfPlayers; c++)
+    {
+        printf("%d: ", c+1);
+        listOnePlayer(&(team->player[c]));
+    }
+    printf("\nIhre Wahl: ");
+    int chosenPlayer;
+    scanf("%d", &chosenPlayer);
+    chosenPlayer--;
+    //Entfernen aus Hash-Table
+    int hash = calcDivisionrest(team->player[chosenPlayer].name);
+    removeFromEVList(PlayerIndex[hash], team->player[chosenPlayer]);
+
+    //freigeben des allocierten speichers
+    free(team->player[chosenPlayer].name);                         //Freigeben speicher zu löschender Spieler
+    free(team->player[chosenPlayer].birthday);
+
+    team->numberOfPlayers --;                                       //reduziere spieleranzahl im Team
+
+    if(chosenPlayer != (team->numberOfPlayers-1) )
+    {
+        team->player[chosenPlayer].name = team->player[team->numberOfPlayers].name;   //setze letzten spieler in das arrayfeld des geloeschten ein
+        team->player[chosenPlayer].birthday = team->player[team->numberOfPlayers].birthday;
+        team->player[chosenPlayer].goals = team->player[team->numberOfPlayers].goals;
+        team->player[chosenPlayer].nr = team->player[team->numberOfPlayers].nr;
+    }
+    memset(&team->player[team->numberOfPlayers], 0, sizeof(TPlayer));        //lösche letzen spieler
+    clearBuffer();
 }
 
 void searchPlayer() {
@@ -253,6 +291,67 @@ void listOnePlayer(TPlayer * player) {
     }else{
         printf(")\n");
     }
+}
+
+/*
+void swapPlayers(TPlayer * a, TPlayer * b)
+{
+    TPlayer temp;
+    temp.name = a->name;
+    temp.birthday = a->birthday;
+    temp.goals = a->goals;
+    temp.nr = a->nr;
+
+    a->name = b->name;
+    a->birthday = b->birthday;
+    a->goals = b->goals;
+    a->nr = b->nr;
+
+    b->name = temp.name;
+    b->birthday = temp.birthday;
+    b->goals = temp.goals;
+    b->nr = temp.nr;
+}
+*/
+
+TTeam * choseTeam()
+{
+    printf("Liste der Mannschaften\n");
+    printLine('=', 24);
+
+    TTeam * currentTeam = firstTeam;
+    int i = 1;
+    while(currentTeam->nextTeam != NULL)            //Anzeigen aller Teams
+    {
+        printf("%d: %s\n", i, currentTeam->name);
+        currentTeam = currentTeam->nextTeam;
+        i++;
+    }
+    printf("%d: %s\n", i, currentTeam->name);
+    int chosenTeam;
+    while(1)
+    {
+        printf("\nWaehlen Sie ein Mannschaft (0 Abbruch) ", i, currentTeam->name);       //Auswählen des Teams
+        int erg = scanf("%d", &chosenTeam);
+        if(erg < 1 || chosenTeam < 0 || chosenTeam > i)            //ungültige Eingaben abfangen
+        {
+            printf("Fehlerhafte Eingabe!\n");
+            continue;
+        }
+        else if(chosenTeam == 0)                                    //Abbruch
+        {
+            break;
+        }
+        else
+        {
+            currentTeam = firstTeam;                //springe zum ausgewählten Team
+            for(int c = 0; c < (chosenTeam-1); c++) currentTeam = currentTeam->nextTeam;
+            break;
+        }
+    }
+    if(chosenTeam == 0) return NULL;
+    clearBuffer();
+    return currentTeam;
 }
 
 void teamCleanup()

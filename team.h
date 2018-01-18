@@ -21,6 +21,10 @@ void listOneTeam(TTeam * team);
 
 void listOnePlayer(TPlayer * player);
 
+//void swapPlayers(TPlayer * a, TPlayer * b);
+
+TTeam * choseTeam();
+
 void teamCleanup();
 
 void oneTeamCleanup(TTeam * team);

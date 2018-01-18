@@ -26,6 +26,26 @@ int sortTeam(int (* compar)(TPlayer *, TPlayer *)) {
 
 void swap(TPlayer *a, TPlayer *b)
 {
+    //Tauschen des Spielers der entsprechenden Hash-Einträge
+    int hashA = calcDivisionrest(a->name);
+    int hashB = calcDivisionrest(b->name);
+    TListElement * elementA, * elementB;
+
+    elementA = PlayerIndex[hashA].first;
+    while(elementA->Player != a)
+    {
+        elementA->next;
+    }
+
+    elementB = PlayerIndex[hashB].first;
+    while(elementB->Player != b)
+    {
+        elementB->next;
+    }
+    elementA->Player = b;
+    elementB->Player = a;
+
+    //Tauschen der Spieler
     TPlayer tmp = *a;
     *a = *b;
     *b = tmp;
