@@ -26,6 +26,7 @@ int main(int argc, char * argv[]) {
         "Suchen",
         "Sortieren",
         "Auflisten",
+        "Hash-Tabelle auflisten",
         "Programm beenden"
     };
 
@@ -33,7 +34,7 @@ int main(int argc, char * argv[]) {
     load(SAVEFILE);                 /*LADEN*/
 
     do{
-        choice = getMenu("Mannschaftsverwaltung V0.01", menu, 8);
+        choice = getMenu("Mannschaftsverwaltung V0.01", menu, 9);
 
         switch(choice) {
 
@@ -128,6 +129,36 @@ int main(int argc, char * argv[]) {
             listTeams();
             break;
         case 8:
+            clearScreen();
+            printf("Hash-Tabelle\n");
+            printLine('=', 12);
+            printf("\nHashwert  |  Mannschaft\t\t\t | Spieler\n");
+            printLine('-', 80);
+            for(int c = 0; c < MAXINDEX; c++)
+            {
+                if(PlayerIndex[c].first != NULL)
+                {
+                    printf("      %3d | ", c);
+                    int len = 29 - strlen(PlayerIndex[c].first->Team->name);
+                    printf("%s", PlayerIndex[c].first->Team->name);
+                    for(int i = 0; i < len; i++)
+                        printf(" ");
+                    printf("| %s\n", PlayerIndex[c].first->Player->name);
+                    TListElement * currentElement = PlayerIndex[c].first;
+                    while(currentElement->next != NULL)
+                    {
+                        currentElement = currentElement->next;
+                        printf("          | ", c);
+                        int len = 29 - strlen(currentElement->Team->name);
+                        printf("%s", currentElement->Team->name);
+                        for(int i = 0; i < len; i++)
+                            printf(" ");
+                        printf("| %s\n", currentElement->Player->name);
+                    }
+                }
+            }
+            break;
+        case 9:
             printf("Programm wird beendet!\n");
             save(SAVEFILE);
             teamCleanup();
@@ -135,5 +166,5 @@ int main(int argc, char * argv[]) {
         }
         waitForEnter();
 
-    }while(choice != 8);
+    }while(choice != 9);
 }
